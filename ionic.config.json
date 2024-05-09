@@ -1,0 +1,7 @@
+{
+  "name": "crossperformance-ionic",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
