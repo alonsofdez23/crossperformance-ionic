@@ -1,0 +1,79 @@
+<ion-header class="ion-no-border" [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Clases</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Clases</ion-title>
+      <ion-item>
+        <ion-input value="{{ dateSelected | date: 'dd/MM/yyyy' }}" id="date" [readonly]="true"></ion-input>
+        <ion-popover trigger="date" size="cover">
+
+          <ng-template>
+            <ion-datetime
+              presentation="date"
+              displayFormat="DD/MM/YYYY"
+              locale="es-ES"
+              [(ngModel)]="dateSelected"
+              [firstDayOfWeek]="1"></ion-datetime>
+          </ng-template>
+
+        </ion-popover>
+      </ion-item>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- <ion-button (click)="loginRequest()" expand="block" fill="clear" shape="round">
+    Login
+  </ion-button>
+  <ion-button (click)="logoutRequest()" expand="block" fill="clear" shape="round">
+    Logout
+  </ion-button>
+  <ion-button (click)="indexUsersRequest()" expand="block" fill="clear" shape="round">
+    IndexUser
+  </ion-button>
+  <ion-button (click)="indexClasesRequest()" expand="block" fill="clear" shape="round">
+    IndexClase
+  </ion-button>
+  <ion-button (click)="showClasesRequest()" expand="block" fill="clear" shape="round">
+    ShowClase
+  </ion-button>
+  <ion-button (click)="storeClasesRequest()" expand="block" fill="clear" shape="round">
+    storeClase
+  </ion-button>
+  <ion-button (click)="updateClasesRequest()" expand="block" fill="clear" shape="round">
+    updateClase
+  </ion-button>
+  <ion-button (click)="deleteClasesRequest()" expand="block" fill="clear" shape="round">
+    deleteClase
+  </ion-button>
+  <ion-input [(ngModel)]="idClase" placeholder="ID clase a borrar"></ion-input> -->
+
+  <ion-card
+    *ngFor="let clase of clases">
+
+    <ion-card-header>
+      <ion-card-title>{{ clase.fecha_hora | date: 'HH:mm' }}</ion-card-title>
+      <ion-card-subtitle>Monitor {{ clase.monitor_id }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+
+        <ion-item
+          lines="none"
+          *ngFor="let atleta of clase.atletas">
+
+          <ion-thumbnail slot="start">
+            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+          </ion-thumbnail>
+          <ion-label>{{ atleta.name }}</ion-label>
+        </ion-item>
+
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
