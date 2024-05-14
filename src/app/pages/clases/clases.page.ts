@@ -12,24 +12,17 @@ import { Clase } from 'src/app/models/clase';
 export class ClasesPage implements OnInit {
   public clases: any;
 
+  // Fecha actual
   public dateSelected: string = new Date().toISOString();
 
   public idClase!: number;
 
   constructor(
     private apiService: ApiService,
-  ) {
-    this.indexDateClasesRequest(this.dateSelected);
-  }
+  ) { }
 
   ngOnInit() {
-  }
-
-  changedDate(event: any) {
-    console.log(event.detail.value);
-    this.dateSelected = event.detail.value;
-    this.indexDateClasesRequest(event.detail.value);
-
+    this.indexDateClasesRequest();
   }
 
   formatDate(date: string): string {
@@ -86,17 +79,18 @@ export class ClasesPage implements OnInit {
       )
   }
 
-  indexDateClasesRequest(date: string) {
-    this.apiService.indexDateClase(date)
-      .subscribe(
-        (response) => {
-          this.clases = response;
-          console.log(response);
+  indexDateClasesRequest() {
+    console.log(this.dateSelected);
+    this.apiService.indexDateClase(this.dateSelected)
+      .subscribe({
+        next: (res: any) => {
+          this.clases = res;
+          console.log(res);
         },
-        (error) => {
-          console.log(error);
+        error: (err: any) => {
+          console.log(err);
         }
-      )
+      })
   }
 
   indexUsersRequest() {
