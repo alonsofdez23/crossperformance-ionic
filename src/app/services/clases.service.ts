@@ -74,11 +74,11 @@ export class ApiService {
 
   // Clases CRUD
   public indexClase() {
-    return this.http.get<ClasesResponse>(environment.apiUrl + 'clases', this.httpLogin);
+    return this.http.get<any>(environment.apiUrl + 'clases', this.httpLogin);
   }
 
   public indexDateClase(date: string) {
-    return this.http.get<ClasesResponse>(environment.apiUrl + `clases/${date}`, this.httpLogin);
+    return this.http.get<any>(environment.apiUrl + `clases/${date}`, this.httpLogin);
   }
 
   public showClase(id: number) {

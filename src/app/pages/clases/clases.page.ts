@@ -16,11 +16,20 @@ export class ClasesPage implements OnInit {
 
   public idClase!: number;
 
-  constructor(private apiService: ApiService) {
-    this.indexDateClasesRequest();
+  constructor(
+    private apiService: ApiService,
+  ) {
+    this.indexDateClasesRequest(this.dateSelected);
   }
 
   ngOnInit() {
+  }
+
+  changedDate(event: any) {
+    console.log(event.detail.value);
+    this.dateSelected = event.detail.value;
+    this.indexDateClasesRequest(event.detail.value);
+
   }
 
   formatDate(date: string): string {
@@ -64,8 +73,21 @@ export class ClasesPage implements OnInit {
     )
   }
 
-  indexDateClasesRequest() {
-    this.apiService.indexDateClase(this.dateSelected)
+  indexClasesRequest() {
+    this.apiService.indexClase()
+      .subscribe(
+        (response) => {
+          this.clases = response;
+          console.log(response);
+        },
+        (error) => {
+          console.log(error);
+        }
+      )
+  }
+
+  indexDateClasesRequest(date: string) {
+    this.apiService.indexDateClase(date)
       .subscribe(
         (response) => {
           this.clases = response;
