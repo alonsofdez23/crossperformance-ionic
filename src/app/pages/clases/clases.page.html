@@ -1,6 +1,7 @@
 <ion-header class="ion-no-border" [translucent]="true">
   <ion-toolbar>
     <ion-title>Clases</ion-title>
+    <ion-progress-bar *ngIf="loading" type="indeterminate"></ion-progress-bar>
   </ion-toolbar>
 </ion-header>
 
@@ -27,54 +28,79 @@
     </ion-toolbar>
   </ion-header>
 
-  <!-- <ion-button (click)="loginRequest()" expand="block" fill="clear" shape="round">
-    Login
-  </ion-button>
-  <ion-button (click)="logoutRequest()" expand="block" fill="clear" shape="round">
-    Logout
-  </ion-button>
-  <ion-button (click)="indexUsersRequest()" expand="block" fill="clear" shape="round">
-    IndexUser
-  </ion-button>
-  <ion-button (click)="indexClasesRequest()" expand="block" fill="clear" shape="round">
-    IndexClase
-  </ion-button>
-  <ion-button (click)="showClasesRequest()" expand="block" fill="clear" shape="round">
-    ShowClase
-  </ion-button>
-  <ion-button (click)="storeClasesRequest()" expand="block" fill="clear" shape="round">
-    storeClase
-  </ion-button>
-  <ion-button (click)="updateClasesRequest()" expand="block" fill="clear" shape="round">
-    updateClase
-  </ion-button>
-  <ion-button (click)="deleteClasesRequest()" expand="block" fill="clear" shape="round">
-    deleteClase
-  </ion-button>
-  <ion-input [(ngModel)]="idClase" placeholder="ID clase a borrar"></ion-input> -->
-
+  <!-- Listado clases -->
   <ion-card
     *ngFor="let clase of clases">
 
     <ion-card-header>
-      <ion-card-title>{{ clase.fecha_hora | date: 'HH:mm' }}</ion-card-title>
-      <ion-card-subtitle>Monitor {{ clase.monitor_id }}</ion-card-subtitle>
+      <ion-card-subtitle>
+        <div>
+          <ion-thumbnail class="monitor"><img [src]="clase.monitor.profile_photo_url" alt="" srcset=""></ion-thumbnail>
+        </div>
+        <div>{{ clase.entreno.denominacion }}</div>
+        <div>
+          <ion-badge [color]="clase.vacantes === 0 ? 'danger': 'success'">
+            <ion-icon name="people"></ion-icon>
+            {{ clase.vacantes }}
+          </ion-badge>
+        </div>
+        <div>{{ clase.fecha_hora | date: 'HH:mm' }}</div>
+      </ion-card-subtitle>
     </ion-card-header>
+
     <ion-card-content>
-      <ion-list>
+      <!-- <ion-list>
 
         <ion-item
           lines="none"
           *ngFor="let atleta of clase.atletas">
 
           <ion-thumbnail slot="start">
-            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+            <img alt="Silhouette of mountains" [src]="atleta.profile_photo_url" />
           </ion-thumbnail>
           <ion-label>{{ atleta.name }}</ion-label>
         </ion-item>
 
-      </ion-list>
+      </ion-list> -->
+
+      <!-- Atletas en clase y vacantes libres -->
+      <ion-grid>
+        <ion-row>
+          <ion-col
+          *ngFor="let atleta of clase.atletas"
+          size="3" size-md="2" size-lg="1"><ion-thumbnail><img [src]="atleta.profile_photo_url" alt="" srcset=""></ion-thumbnail></ion-col>
+
+          <ion-col
+          *ngFor="let item of huecosLibres(clase.vacantes)"
+          size="3" size-md="2" size-lg="1"><ion-thumbnail><img src="https://ui-avatars.com/api/?background=bbf7d0&color=bbf7d0&size=512" alt="" srcset=""></ion-thumbnail></ion-col>
+        </ion-row>
+      </ion-grid>
+
     </ion-card-content>
+
+    <!-- Botones join/leave clase-->
+    <ion-button
+    *ngIf="!isAtletaJoin(clase.atletas, idUser) && clase.vacantes !== 0; else leaveClase"
+    (click)="joinClaseRequest(clase.id); indexDateClasesRequest()"
+    [disabled]="clase.vacantes <= 0 || compareDate(clase.fecha_hora)"
+    fill="clear"
+    color="dark"
+    size="large">
+      <ion-icon name="person-add"></ion-icon>
+    </ion-button>
+
+    <ng-template #leaveClase>
+      <ion-button
+      *ngIf="isAtletaJoin(clase.atletas, idUser)"
+      (click)="leaveClaseRequest(clase.id); indexDateClasesRequest()"
+      [disabled]="clase.vacantes <= 0 || compareDate(clase.fecha_hora)"
+      fill="clear"
+      color="dark"
+      size="large">
+        <ion-icon name="person-remove"></ion-icon>
+      </ion-button>
+    </ng-template>
+
   </ion-card>
 
 </ion-content>

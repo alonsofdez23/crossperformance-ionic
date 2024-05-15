@@ -1,0 +1,16 @@
+ion-card-subtitle {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+ion-thumbnail {
+  --size: 70px;
+  --border-radius: 10px;
+}
+
+.monitor {
+  --size: 40px;
+  --border-radius: 8px;
+}

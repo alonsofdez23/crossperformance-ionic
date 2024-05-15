@@ -50,17 +50,25 @@ export class ApiService {
     return this.http.get<any>(environment.apiUrl + 'auth/logout', this.httpOptions);
   }
 
+  public showAuthUser() {
+    return this.http.get<any>(environment.apiUrl + 'auth/user', this.httpLogin);
+  }
+
   public indexUser() {
     return this.http.get<any>(environment.apiUrl + 'users', this.httpOptions);
   }
 
+  public showUser(idUser: number) {
+    return this.http.get<any>(environment.apiUrl + `users/${idUser}`, this.httpLogin);
+  }
+
   // Atletas
   public joinClase(idClase: number) {
-    return this.http.post<any>(environment.apiUrl + `clases/join/${idClase}`, this.httpOptions);
+    return this.http.post<any>(environment.apiUrl + `clases/join/${idClase}`, '', this.httpLogin);
   }
 
   public leaveClase(idClase: number) {
-    return this.http.post<any>(environment.apiUrl + `clases/leave/${idClase}`, this.httpOptions);
+    return this.http.post<any>(environment.apiUrl + `clases/leave/${idClase}`, '', this.httpLogin);
   }
 
   // Roles
@@ -78,7 +86,7 @@ export class ApiService {
   }
 
   public indexDateClase(date: string) {
-    return this.http.get<any>(environment.apiUrl + `clases/${date}`, this.httpLogin);
+    return this.http.get<any>(environment.apiUrl + `clases/date/${date}`, this.httpLogin);
   }
 
   public showClase(id: number) {

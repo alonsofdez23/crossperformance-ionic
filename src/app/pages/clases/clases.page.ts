@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/clases.service';
-import { ClasesResponse } from 'src/app/interfaces/clases.interfaces';
+import { Atleta, ClasesResponse } from 'src/app/interfaces/clases.interfaces';
 import { User } from 'src/app/models/user';
 import { Clase } from 'src/app/models/clase';
 
@@ -11,24 +11,47 @@ import { Clase } from 'src/app/models/clase';
 })
 export class ClasesPage implements OnInit {
   public clases: any;
-
   // Fecha actual
+  public now: any = new Date();
   public dateSelected: string = new Date().toISOString();
 
-  public idClase!: number;
+  public idUser!: number;
+
+  public loading: boolean = false;
 
   constructor(
     private apiService: ApiService,
   ) { }
 
   ngOnInit() {
+    this.showAuthUserRequest();
     this.indexDateClasesRequest();
+  }
+
+  huecosLibres(vacantes: number): any[] {
+    return Array(vacantes).fill(0).map((x, i) => i);
   }
 
   formatDate(date: string): string {
     const dateToFormat = new Date(date);
     const dateFormated = dateToFormat.toISOString().slice(0, 19).replace('T', ' ');
     return dateFormated;
+  }
+
+  compareDate(fechaClase: any): boolean {
+    if (new Date(fechaClase) < new Date()) {
+      return true;
+    }
+    return false;
+  }
+
+  isAtletaJoin(atletas: Atleta[], idUser: number): boolean {
+    for (let i = 0; i < atletas.length; i++) {
+      if (atletas[i].id === idUser) {
+        return true;
+      }
+    };
+    return false;
   }
 
   loginRequest() {
@@ -66,25 +89,11 @@ export class ClasesPage implements OnInit {
     )
   }
 
-  indexClasesRequest() {
-    this.apiService.indexClase()
-      .subscribe(
-        (response) => {
-          this.clases = response;
-          console.log(response);
-        },
-        (error) => {
-          console.log(error);
-        }
-      )
-  }
-
-  indexDateClasesRequest() {
-    console.log(this.dateSelected);
-    this.apiService.indexDateClase(this.dateSelected)
+  showAuthUserRequest() {
+    this.apiService.showAuthUser()
       .subscribe({
         next: (res: any) => {
-          this.clases = res;
+          this.idUser = res.id;
           console.log(res);
         },
         error: (err: any) => {
@@ -93,81 +102,45 @@ export class ClasesPage implements OnInit {
       })
   }
 
-  indexUsersRequest() {
-    this.apiService.indexUser()
-      .subscribe(
-        (res) => {
-          console.log(res);
+  indexDateClasesRequest() {
+    this.loading = true;
+    this.apiService.indexDateClase(this.dateSelected)
+      .subscribe({
+        next: (res: any) => {
+          this.loading = false;
+          this.clases = res;
         },
-        (error) => {
-
+        error: (err: any) => {
+          console.log(err);
         }
-      )
+      })
   }
 
-  showClasesRequest() {
-
-    this.apiService.showClase(3)
-      .subscribe(
-        (res) => {
+  joinClaseRequest(idClase: number) {
+    this.loading = true;
+    this.apiService.joinClase(idClase)
+      .subscribe({
+        next: (res: any) => {
+          this.loading = false;
           console.log(res);
         },
-        (error) => {
-
+        error: (err: any) => {
+          console.log(err);
         }
-      )
+      })
   }
 
-  storeClasesRequest() {
-
-    const clase: Clase = {
-      monitor_id: 1,
-      entreno_id: null,
-      fecha_hora: this.formatDate(this.dateSelected!),
-      vacantes: 10
-    }
-
-    this.apiService.storeClase(clase)
-      .subscribe(
-        (res) => {
+  leaveClaseRequest(idClase: number) {
+    this.loading = true;
+    this.apiService.leaveClase(idClase)
+      .subscribe({
+        next: (res: any) => {
+          this.loading = false;
           console.log(res);
         },
-        (error) => {
-          console.log(error);
+        error: (err: any) => {
+          console.log(err);
         }
-      )
-  }
-
-  updateClasesRequest() {
-
-    const clase: Clase = {
-      monitor_id: 1,
-      entreno_id: 12,
-      fecha_hora: this.formatDate(this.dateSelected!),
-      vacantes: 15
-    }
-
-    this.apiService.updateClase(clase, 7)
-      .subscribe(
-        (res) => {
-          console.log(res);
-        },
-        (error) => {
-          console.log(error);
-        }
-      )
-  }
-
-  deleteClasesRequest() {
-
-    this.apiService.deleteClase(this.idClase)
-      .subscribe(
-        (res) => {
-          console.log(res);
-        },
-        (error) => {
-          console.log(error.error.message);
-        }
-      )
+      })
   }
 }
