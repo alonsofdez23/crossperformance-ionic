@@ -112,6 +112,7 @@
 
     <!-- Botones join/leave clase-->
     <ion-button
+    type="button"
     *ngIf="!isAtletaJoin(clase.atletas, idUser) && clase.vacantes !== 0; else leaveClase"
     (click)="joinClaseRequest(clase.id); indexDateClasesRequest()"
     [disabled]="clase.vacantes <= 0 || compareDate(clase.fecha_hora)"
@@ -123,6 +124,7 @@
 
     <ng-template #leaveClase>
       <ion-button
+      type="button"
       *ngIf="isAtletaJoin(clase.atletas, idUser)"
       (click)="leaveClaseRequest(clase.id); indexDateClasesRequest()"
       [disabled]="clase.vacantes <= 0 || compareDate(clase.fecha_hora)"
