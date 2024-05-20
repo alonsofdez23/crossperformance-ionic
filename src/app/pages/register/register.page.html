@@ -1,0 +1,79 @@
+<ion-header class="ion-no-border" [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="Atrás" default-href="/login"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Registro</ion-title>
+    <ion-progress-bar *ngIf="loading" type="indeterminate"></ion-progress-bar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Registro</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="main">
+    <div class="logo">
+      <ion-icon name="barbell"></ion-icon>
+    </div>
+
+    <!-- Login -->
+    <ion-card>
+
+      <form action="" [formGroup]="registerForm" (ngSubmit)="submitForm()" method="post">
+
+        <ion-card-content>
+          <ion-item>
+            <ion-input
+              formControlName="name"
+              label="Nombre"
+              fill="solid"
+              labelPlacement="floating"
+              [clearInput]="true"
+              type="text"
+              placeholder="nombre"
+              ngModel
+              name
+            ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input
+              formControlName="email"
+              label="Email"
+              fill="solid"
+              labelPlacement="floating"
+              [clearInput]="true"
+              type="email"
+              placeholder="email@gmail.com"
+              ngModel
+              email
+            ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input
+              formControlName="password"
+              label="Contraseña"
+              labelPlacement="floating"
+              [clearInput]="true"
+              type="password"
+              placeholder="contraseña"></ion-input>
+          </ion-item>
+        </ion-card-content>
+
+        <ion-button
+        type="submit"
+        fill="clear"
+        color="dark"
+        size="large">
+          <ion-icon name="log-in"></ion-icon>
+        </ion-button>
+
+      </form>
+
+    </ion-card>
+  </div>
+
+</ion-content>

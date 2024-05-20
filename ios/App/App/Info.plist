@@ -45,5 +45,19 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+  <!-- Aceptar peticiones HTTP -->
+  <key>NSAppTransportSecurity</key>
+  <dict>
+      <key>NSAllowsArbitraryLoads</key>
+      <true/>
+  </dict>
+
+  <!-- Acceder a la cámara y librería de fotos -->
+  <key>NSCameraUsageDescription</key>
+	<string>Para capturar imágenes</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Para añadir imagenes</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Para guardar imágenes</string>
 </dict>
 </plist>

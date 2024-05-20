@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
 
-  apiUrl: 'http://10.8.0.3:8000/api/'
+  apiUrl: 'https://apilaravel.duckdns.org/api/'
 };

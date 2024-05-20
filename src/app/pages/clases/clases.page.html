@@ -1,5 +1,8 @@
 <ion-header class="ion-no-border" [translucent]="true">
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="Atrás" default-href="/menu"></ion-back-button>
+    </ion-buttons>
     <ion-title>Clases</ion-title>
     <ion-progress-bar *ngIf="loading" type="indeterminate"></ion-progress-bar>
   </ion-toolbar>
@@ -37,27 +40,8 @@
       <ion-card-subtitle>
         <div>
           <ion-thumbnail id="open-modal" class="monitor"><img [src]="clase.monitor.profile_photo_url" alt="" srcset=""></ion-thumbnail>
-
-          <ion-modal trigger="open-modal" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
-            <ng-template>
-
-              <ion-header>
-                <ion-toolbar>
-                  <ion-title>Entrenador</ion-title>
-                </ion-toolbar>
-              </ion-header>
-              <ion-content class="ion-padding">
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni illum quidem recusandae ducimus quos
-                  reprehenderit. Veniam, molestias quos, dolorum consequuntur nisi deserunt omnis id illo sit cum qui. Eaque,
-                  dicta.
-                </p>
-              </ion-content>
-
-            </ng-template>
-          </ion-modal>
         </div>
-        <div>{{ clase.entreno.denominacion }}</div>
+        <div class="entreno">{{ clase.entreno.denominacion }}</div>
 
         <!-- TODO: Botón asignar entreno -->
         <!-- <ion-button id="present-alert">
@@ -76,7 +60,7 @@
             {{ clase.vacantes }}
           </ion-badge>
         </div>
-        <div>{{ clase.fecha_hora | date: 'HH:mm' }}</div>
+        <div class="hora">{{ clase.fecha_hora | date: 'HH:mm' }}</div>
       </ion-card-subtitle>
     </ion-card-header>
 
@@ -113,9 +97,9 @@
     <!-- Botones join/leave clase-->
     <ion-button
     type="button"
-    *ngIf="!isAtletaJoin(clase.atletas, idUser) && clase.vacantes !== 0; else leaveClase"
+    *ngIf="!isAtletaJoin(clase.atletas, idUser) && clase.vacantes !>= 0; else leaveClase"
     (click)="joinClaseRequest(clase.id); indexDateClasesRequest()"
-    [disabled]="clase.vacantes <= 0 || compareDate(clase.fecha_hora)"
+    [disabled]="compareDate(clase.fecha_hora)"
     fill="clear"
     color="dark"
     size="large">
@@ -127,7 +111,7 @@
       type="button"
       *ngIf="isAtletaJoin(clase.atletas, idUser)"
       (click)="leaveClaseRequest(clase.id); indexDateClasesRequest()"
-      [disabled]="clase.vacantes <= 0 || compareDate(clase.fecha_hora)"
+      [disabled]="compareDate(clase.fecha_hora)"
       fill="clear"
       color="dark"
       size="large">

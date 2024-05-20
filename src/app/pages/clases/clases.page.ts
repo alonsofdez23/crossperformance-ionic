@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from 'src/app/services/clases.service';
+import { ApiService } from 'src/app/services/api.service';
 import { Atleta, ClasesResponse } from 'src/app/interfaces/clases.interfaces';
 import { User } from 'src/app/models/user';
 import { Clase } from 'src/app/models/clase';
