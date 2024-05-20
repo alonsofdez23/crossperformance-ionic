@@ -31,6 +31,10 @@ const routes: Routes = [
     path: 'monitor-modal',
     loadChildren: () => import('./modals/monitor-modal/monitor-modal.module').then( m => m.MonitorModalPageModule)
   },
+  {
+    path: 'entreno-modal',
+    loadChildren: () => import('./modals/entreno-modal/entreno-modal.module').then( m => m.EntrenoModalPageModule)
+  },
 ];
 
 @NgModule({

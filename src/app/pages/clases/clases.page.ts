@@ -5,6 +5,7 @@ import { User } from 'src/app/models/user';
 import { Clase } from 'src/app/models/clase';
 import { ModalController } from '@ionic/angular';
 import { MonitorModalPage } from 'src/app/modals/monitor-modal/monitor-modal.page';
+import { EntrenoModalPage } from 'src/app/modals/entreno-modal/entreno-modal.page';
 
 @Component({
   selector: 'app-clases',
@@ -149,8 +150,8 @@ export class ClasesPage implements OnInit {
       })
   }
 
-  // Modal
-  async presentModal(clase: Clase) {
+  // Modals
+  async presentModalMonitor(clase: Clase) {
     const modal = await this.modalCtrl.create({
       component: MonitorModalPage,
       breakpoints: [0, 0.8, 1],
@@ -159,6 +160,22 @@ export class ClasesPage implements OnInit {
         nameMonitor: clase.monitor.name,
         photoMonitor: clase.monitor.profile_photo_url,
         emailMonitor: clase.monitor.email,
+
+        roleUser: this.roleUser,
+      },
+    });
+
+    await modal.present();
+  }
+
+  async presentModalEntreno(clase: Clase) {
+    const modal = await this.modalCtrl.create({
+      component: EntrenoModalPage,
+      breakpoints: [0, 0.8, 1],
+      initialBreakpoint: 0.8,
+      componentProps: {
+        denominacionEntreno: clase.entreno.denominacion,
+        entrenoEntreno: clase.entreno.entreno,
 
         roleUser: this.roleUser,
       },
