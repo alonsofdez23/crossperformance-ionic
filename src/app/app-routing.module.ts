@@ -35,6 +35,10 @@ const routes: Routes = [
     path: 'entreno-modal',
     loadChildren: () => import('./modals/entreno-modal/entreno-modal.module').then( m => m.EntrenoModalPageModule)
   },
+  {
+    path: 'atleta-modal',
+    loadChildren: () => import('./modals/atleta-modal/atleta-modal.module').then( m => m.AtletaModalPageModule)
+  },
 ];
 
 @NgModule({

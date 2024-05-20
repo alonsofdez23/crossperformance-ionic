@@ -6,6 +6,7 @@ import { Clase } from 'src/app/models/clase';
 import { ModalController } from '@ionic/angular';
 import { MonitorModalPage } from 'src/app/modals/monitor-modal/monitor-modal.page';
 import { EntrenoModalPage } from 'src/app/modals/entreno-modal/entreno-modal.page';
+import { AtletaModalPage } from 'src/app/modals/atleta-modal/atleta-modal.page';
 
 @Component({
   selector: 'app-clases',
@@ -176,6 +177,23 @@ export class ClasesPage implements OnInit {
       componentProps: {
         denominacionEntreno: clase.entreno.denominacion,
         entrenoEntreno: clase.entreno.entreno,
+
+        roleUser: this.roleUser,
+      },
+    });
+
+    await modal.present();
+  }
+
+  async presentModalAtleta(atleta: User) {
+    const modal = await this.modalCtrl.create({
+      component: AtletaModalPage,
+      breakpoints: [0, 0.8, 1],
+      initialBreakpoint: 0.8,
+      componentProps: {
+        nameAtleta: atleta.name,
+        photoAtleta: atleta.profile_photo_url,
+        emailAtleta: atleta.email,
 
         roleUser: this.roleUser,
       },

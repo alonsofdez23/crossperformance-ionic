@@ -1,0 +1,16 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>{{ nameAtleta }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+
+  <ion-card>
+    <img [alt]="nameAtleta" [src]="photoAtleta" />
+    <ion-card-header>
+      <ion-card-title>{{ nameAtleta }}</ion-card-title>
+      <ion-card-subtitle *ngIf="roleUser === 'admin'">{{ emailAtleta }}</ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+
+</ion-content>

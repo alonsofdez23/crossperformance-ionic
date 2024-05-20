@@ -84,6 +84,7 @@
         <ion-row>
           <ion-col
           *ngFor="let atleta of clase.atletas"
+          (click)="presentModalAtleta(atleta)"
           size="3" size-md="2" size-lg="1"><ion-thumbnail><img [src]="atleta.profile_photo_url" alt="" srcset=""></ion-thumbnail></ion-col>
 
           <ion-col
