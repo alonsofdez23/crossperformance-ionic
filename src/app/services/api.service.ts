@@ -55,7 +55,7 @@ export class ApiService {
   }
 
   public showAuthUser() {
-    return this.http.get<any>(environment.apiUrl + 'auth/user', this.httpOptions);
+    return this.http.get<any>(environment.apiUrl + 'auth/user', this.httpLogin);
   }
 
   public indexUser() {

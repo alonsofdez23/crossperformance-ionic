@@ -39,7 +39,7 @@
     <ion-card-header>
       <ion-card-subtitle>
         <div>
-          <ion-thumbnail id="open-modal" class="monitor"><img [src]="clase.monitor.profile_photo_url" alt="" srcset=""></ion-thumbnail>
+          <ion-thumbnail (click)="presentModal(clase)" class="monitor"><img [src]="clase.monitor.profile_photo_url" alt="" srcset=""></ion-thumbnail>
         </div>
         <div class="entreno">{{ clase.entreno.denominacion }}</div>
 

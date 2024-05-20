@@ -3,6 +3,8 @@ import { ApiService } from 'src/app/services/api.service';
 import { Atleta, ClasesResponse } from 'src/app/interfaces/clases.interfaces';
 import { User } from 'src/app/models/user';
 import { Clase } from 'src/app/models/clase';
+import { ModalController } from '@ionic/angular';
+import { MonitorModalPage } from 'src/app/modals/monitor-modal/monitor-modal.page';
 
 @Component({
   selector: 'app-clases',
@@ -16,11 +18,13 @@ export class ClasesPage implements OnInit {
   public dateSelected: string = new Date().toISOString();
 
   public idUser!: number;
+  public roleUser!: string;
 
   public loading: boolean = false;
 
   constructor(
     private apiService: ApiService,
+    private modalCtrl: ModalController,
   ) { }
 
   ngOnInit() {
@@ -94,6 +98,7 @@ export class ClasesPage implements OnInit {
       .subscribe({
         next: (res: any) => {
           this.idUser = res.id;
+          this.roleUser = res.role;
           console.log(res);
         },
         error: (err: any) => {
@@ -142,5 +147,23 @@ export class ClasesPage implements OnInit {
           console.log(err);
         }
       })
+  }
+
+  // Modal
+  async presentModal(clase: Clase) {
+    const modal = await this.modalCtrl.create({
+      component: MonitorModalPage,
+      breakpoints: [0, 0.8, 1],
+      initialBreakpoint: 0.8,
+      componentProps: {
+        nameMonitor: clase.monitor.name,
+        photoMonitor: clase.monitor.profile_photo_url,
+        emailMonitor: clase.monitor.email,
+
+        roleUser: this.roleUser,
+      },
+    });
+
+    await modal.present();
   }
 }

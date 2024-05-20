@@ -27,6 +27,10 @@ const routes: Routes = [
     path: 'profile',
     loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
   },
+  {
+    path: 'monitor-modal',
+    loadChildren: () => import('./modals/monitor-modal/monitor-modal.module').then( m => m.MonitorModalPageModule)
+  },
 ];
 
 @NgModule({
