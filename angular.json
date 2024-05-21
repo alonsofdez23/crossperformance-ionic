@@ -13,6 +13,12 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "date-fns",
+              "date-fns/_lib/cloneObject",
+              "date-fns/_lib/getTimezoneOffsetInMilliseconds",
+              "date-fns/_lib/toInteger"
+            ],
             "outputPath": "www",
             "index": "src/index.html",
             "main": "src/main.ts",
