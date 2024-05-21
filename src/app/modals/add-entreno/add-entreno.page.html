@@ -1,0 +1,21 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Crear nuevo entreno</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+
+  <!-- Entreno -->
+  <ion-item>
+    <ion-input [(ngModel)]="denominacion" label="Título" type="text"></ion-input>
+  </ion-item>
+
+  <!-- Entreno -->
+  <ion-item>
+    <ion-textarea [(ngModel)]="entreno" label="Entreno" [counter]="true" maxlength="600"></ion-textarea>
+  </ion-item>
+
+  <!-- Button -->
+  <ion-button (click)="storeEntrenoRequest()" expand="block">Crear entreno</ion-button>
+
+</ion-content>

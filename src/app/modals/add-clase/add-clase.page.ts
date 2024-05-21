@@ -6,6 +6,7 @@ import { ApiService } from 'src/app/services/api.service';
 
 import { format, formatInTimeZone } from "date-fns-tz";
 import { UtilitiesService } from 'src/app/services/utilities.service';
+import { ClasesPage } from 'src/app/pages/clases/clases.page';
 
 @Component({
   selector: 'app-add-clase',
@@ -91,6 +92,7 @@ export class AddClasePage implements OnInit {
         next: (res: any) => {
           console.log(res);
 
+          this.closeModal();
           this.utilitiesService.presentToast('Clase creada correctamente');
         },
         error: (err: any) => {

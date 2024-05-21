@@ -43,6 +43,10 @@ const routes: Routes = [
     path: 'add-clase',
     loadChildren: () => import('./modals/add-clase/add-clase.module').then( m => m.AddClasePageModule)
   },
+  {
+    path: 'add-entreno',
+    loadChildren: () => import('./modals/add-entreno/add-entreno.module').then( m => m.AddEntrenoPageModule)
+  },
 ];
 
 @NgModule({

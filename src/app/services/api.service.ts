@@ -123,7 +123,7 @@ export class ApiService {
   }
 
   public storeEntreno(entreno: Entreno) {
-    return this.http.post<any>(environment.apiUrl + 'entrenos/', entreno, this.httpOptions);
+    return this.http.post<any>(environment.apiUrl + 'entrenos/', entreno, this.httpLogin);
   }
 
   public updateEntreno(entreno: Entreno, id: number) {

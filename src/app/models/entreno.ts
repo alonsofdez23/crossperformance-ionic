@@ -1,5 +1,5 @@
 export interface Entreno {
-  id: number,
+  id?: number,
   denominacion: string,
-  entreno: string
+  entreno: string,
 }

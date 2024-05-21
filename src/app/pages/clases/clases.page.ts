@@ -9,6 +9,7 @@ import { EntrenoModalPage } from 'src/app/modals/entreno-modal/entreno-modal.pag
 import { AtletaModalPage } from 'src/app/modals/atleta-modal/atleta-modal.page';
 import { AddClasePage } from 'src/app/modals/add-clase/add-clase.page';
 import { formatInTimeZone, utcToZonedTime } from 'date-fns-tz';
+import { AddEntrenoPage } from 'src/app/modals/add-entreno/add-entreno.page';
 
 @Component({
   selector: 'app-clases',
@@ -223,6 +224,20 @@ export class ClasesPage implements OnInit {
       initialBreakpoint: 1,
       componentProps: {
         date: date,
+
+        roleUser: this.roleUser,
+      },
+    });
+
+    await modal.present();
+  }
+
+  async addEntreno() {
+    const modal = await this.modalCtrl.create({
+      component: AddEntrenoPage,
+      breakpoints: [0, 1],
+      initialBreakpoint: 1,
+      componentProps: {
 
         roleUser: this.roleUser,
       },
