@@ -4,7 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'clases',
     pathMatch: 'full'
   },
   {
@@ -38,6 +38,10 @@ const routes: Routes = [
   {
     path: 'atleta-modal',
     loadChildren: () => import('./modals/atleta-modal/atleta-modal.module').then( m => m.AtletaModalPageModule)
+  },
+  {
+    path: 'add-clase',
+    loadChildren: () => import('./modals/add-clase/add-clase.module').then( m => m.AddClasePageModule)
   },
 ];
 

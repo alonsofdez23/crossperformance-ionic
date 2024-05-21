@@ -7,6 +7,8 @@ import { ModalController } from '@ionic/angular';
 import { MonitorModalPage } from 'src/app/modals/monitor-modal/monitor-modal.page';
 import { EntrenoModalPage } from 'src/app/modals/entreno-modal/entreno-modal.page';
 import { AtletaModalPage } from 'src/app/modals/atleta-modal/atleta-modal.page';
+import { AddClasePage } from 'src/app/modals/add-clase/add-clase.page';
+import { formatInTimeZone, utcToZonedTime } from 'date-fns-tz';
 
 @Component({
   selector: 'app-clases',
@@ -15,9 +17,13 @@ import { AtletaModalPage } from 'src/app/modals/atleta-modal/atleta-modal.page';
 })
 export class ClasesPage implements OnInit {
   public clases: any;
-  // Fecha actual
-  public now: any = new Date();
+
+  // TimeZone User
+  public userTimeZone: string = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
   public dateSelected: string = new Date().toISOString();
+  // Fecha actual formateada
+  public dateformated: string = formatInTimeZone(new Date(), this.userTimeZone, 'yyyy-MM-dd HH:mm:ss');
 
   public idUser!: number;
   public roleUser!: string;
@@ -58,6 +64,14 @@ export class ClasesPage implements OnInit {
       }
     };
     return false;
+  }
+
+  handleRefresh(event: any) {
+    setTimeout(() => {
+      this.indexDateClasesRequest();
+
+      event.target.complete();
+    }, 2000);
   }
 
   loginRequest() {
@@ -194,6 +208,21 @@ export class ClasesPage implements OnInit {
         nameAtleta: atleta.name,
         photoAtleta: atleta.profile_photo_url,
         emailAtleta: atleta.email,
+
+        roleUser: this.roleUser,
+      },
+    });
+
+    await modal.present();
+  }
+
+  async addClase(date: any) {
+    const modal = await this.modalCtrl.create({
+      component: AddClasePage,
+      breakpoints: [0, 1],
+      initialBreakpoint: 1,
+      componentProps: {
+        date: date,
 
         roleUser: this.roleUser,
       },

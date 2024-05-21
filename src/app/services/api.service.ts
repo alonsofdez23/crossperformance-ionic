@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ClasesResponse } from '../interfaces/clases.interfaces';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/user';
-import { Clase } from '../models/clase';
+import { Clase, ClaseStore } from '../models/clase';
 import { Entreno } from '../models/entreno';
 
 @Injectable({
@@ -66,13 +66,17 @@ export class ApiService {
     return this.http.get<any>(environment.apiUrl + `users/${idUser}`, this.httpOptions);
   }
 
+  public usersAdminCoach() {
+    return this.http.get<any>(environment.apiUrl + 'users/roles/admincoach', this.httpLogin);
+  }
+
   // Atletas
   public joinClase(idClase: number) {
-    return this.http.post<any>(environment.apiUrl + `clases/join/${idClase}`, '', this.httpOptions);
+    return this.http.post<any>(environment.apiUrl + `clases/join/${idClase}`, '', this.httpLogin);
   }
 
   public leaveClase(idClase: number) {
-    return this.http.post<any>(environment.apiUrl + `clases/leave/${idClase}`, '', this.httpOptions);
+    return this.http.post<any>(environment.apiUrl + `clases/leave/${idClase}`, '', this.httpLogin);
   }
 
   // Roles
@@ -97,8 +101,8 @@ export class ApiService {
     return this.http.get<any>(environment.apiUrl + 'clases/' + id, this.httpOptions);
   }
 
-  public storeClase(clase: Clase) {
-    return this.http.post<any>(environment.apiUrl + 'clases/', clase, this.httpOptions);
+  public storeClase(clase: ClaseStore) {
+    return this.http.post<any>(environment.apiUrl + 'clases/', clase, this.httpLogin);
   }
 
   public updateClase(clase: Clase, id: number) {
@@ -111,7 +115,7 @@ export class ApiService {
 
   // Entrenos CRUD
   public indexEntreno() {
-    return this.http.get<any>(environment.apiUrl + 'entrenos', this.httpOptions);
+    return this.http.get<any>(environment.apiUrl + 'entrenos', this.httpLogin);
   }
 
   public showEntreno(id: number) {

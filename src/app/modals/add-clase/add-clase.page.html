@@ -1,0 +1,58 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Añadir nueva clase</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+
+  <!-- Día y hora -->
+  <!-- <ion-item>
+    <ion-input value="{{ date | date: 'dd/MM/yyyy' }}" id="date" [readonly]="true"></ion-input>
+    <ion-popover trigger="date" size="cover">
+
+      <ng-template>
+        <ion-datetime
+          presentation="date"
+          displayFormat="DD/MM/YYYY"
+          locale="es-ES"
+          [(ngModel)]="date"
+          [firstDayOfWeek]="1"></ion-datetime>
+      </ng-template>
+
+    </ion-popover>
+  </ion-item> -->
+
+  <ion-datetime
+    displayFormat="DD/MM/YYYY"
+    locale="es-ES"
+    [(ngModel)]="date"
+    [firstDayOfWeek]="1"
+  ></ion-datetime>
+
+  <!-- Monitor -->
+  <ion-item>
+    <ion-select [(ngModel)]="monitorSelected" label="Monitor">
+      <ion-select-option
+        *ngFor="let monitor of monitores"
+        [value]="monitor.id">{{ monitor.name }}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- Entreno -->
+  <ion-item>
+    <ion-select [(ngModel)]="entrenoSelected" label="Entreno">
+      <ion-select-option
+        *ngFor="let entreno of entrenos"
+        [value]="entreno.id">{{ entreno.denominacion }}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- Vacantes -->
+  <ion-item>
+    <ion-input [(ngModel)]="plazasSelected" label="Plazas" type="number"></ion-input>
+  </ion-item>
+
+  <!-- Button -->
+  <ion-button (click)="storeClaseRequest()" expand="block">Crear clase</ion-button>
+
+</ion-content>

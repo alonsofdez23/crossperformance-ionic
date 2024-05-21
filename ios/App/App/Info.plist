@@ -45,6 +45,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+
   <!-- Aceptar peticiones HTTP -->
   <key>NSAppTransportSecurity</key>
   <dict>

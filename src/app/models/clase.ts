@@ -10,3 +10,12 @@ export interface Clase {
   vacantes: number,
   atletas?: Atleta[]
 }
+
+export interface ClaseStore {
+  id?: number,
+  monitor_id: number,
+  entreno_id: number | undefined,
+  fecha_hora?: string,
+  vacantes: number,
+  atletas?: Atleta[]
+}

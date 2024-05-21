@@ -4,11 +4,15 @@
       <ion-back-button text="Atrás" default-href="/menu"></ion-back-button>
     </ion-buttons>
     <ion-title>Clases</ion-title>
-    <ion-progress-bar *ngIf="loading" type="indeterminate"></ion-progress-bar>
+    <ion-progress-bar color="medium" *ngIf="loading" type="indeterminate"></ion-progress-bar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Clases</ion-title>
@@ -121,5 +125,24 @@
     </ng-template>
 
   </ion-card>
+
+  <!-- Fab button (admin/coach) -->
+  <!-- TODO -->
+  <ion-fab *ngIf="roleUser === 'admin' || roleUser === 'coach'"
+    slot="fixed"
+    vertical="bottom"
+    horizontal="end">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button>
+        <ion-icon name="barbell"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="addClase(dateSelected)">
+        <ion-icon name="calendar"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
 
 </ion-content>
