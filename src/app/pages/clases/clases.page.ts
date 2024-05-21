@@ -230,6 +230,11 @@ export class ClasesPage implements OnInit {
     });
 
     await modal.present();
+
+    await modal.onWillDismiss()
+      .then(() => {
+        this.indexDateClasesRequest();
+      });
   }
 
   async addEntreno() {
