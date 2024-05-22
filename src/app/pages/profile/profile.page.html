@@ -4,7 +4,7 @@
       <ion-back-button text="Atrás" default-href="/menu"></ion-back-button>
     </ion-buttons>
     <ion-title>{{ user?.name ?? 'Perfil' }}</ion-title>
-    <ion-progress-bar *ngIf="loading" type="indeterminate"></ion-progress-bar>
+    <ion-progress-bar color="primary" *ngIf="loading" type="indeterminate"></ion-progress-bar>
   </ion-toolbar>
 </ion-header>
 
@@ -31,59 +31,51 @@
     </div> -->
 
     <!-- Login -->
-    <ion-card>
 
-      <form action="" [formGroup]="profileForm" (ngSubmit)="submitForm()" method="post">
+    <form action="" [formGroup]="profileForm" (ngSubmit)="submitForm()" method="post">
 
-        <ion-card-content>
-          <ion-item>
-            <ion-input
-              formControlName="name"
-              label="Nombre"
-              fill="solid"
-              labelPlacement="floating"
-              [clearInput]="true"
-              type="text"
-              placeholder="nombre"
-              ngModel
-              name
-            ></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input
-              formControlName="email"
-              label="Email"
-              fill="solid"
-              labelPlacement="floating"
-              [clearInput]="true"
-              type="email"
-              placeholder="email@gmail.com"
-              ngModel
-              email
-            ></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input
-              formControlName="password"
-              label="Contraseña"
-              labelPlacement="floating"
-              [clearInput]="true"
-              type="password"
-              placeholder="contraseña"></ion-input>
-          </ion-item>
-        </ion-card-content>
+      <ion-item>
+        <ion-input
+          formControlName="name"
+          label="Nombre"
+          [clearInput]="true"
+          type="text"
+          placeholder="nombre"
+          ngModel
+          name
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          formControlName="email"
+          label="Email"
+          [clearInput]="true"
+          type="email"
+          placeholder="email@gmail.com"
+          ngModel
+          email
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          formControlName="password"
+          label="Contraseña"
+          type="password"
+          placeholder="contraseña">
+          <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+        </ion-input>
+      </ion-item>
 
-        <ion-button
-        type="submit"
-        fill="clear"
-        color="dark"
-        size="large">
-          <ion-icon name="log-in"></ion-icon>
-        </ion-button>
+      <ion-button
+      type="submit"
+      fill="clear"
+      color="dark"
+      size="large">
+        <ion-icon color="primary" name="log-in"></ion-icon>
+      </ion-button>
 
-      </form>
+    </form>
 
-    </ion-card>
   </div>
 
 </ion-content>

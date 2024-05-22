@@ -12,12 +12,6 @@ import { UtilitiesService } from '../../services/utilities.service';
 })
 export class LoginPage implements OnInit {
 
-  // isToastOpen = false;
-
-  // setOpen(isOpen: boolean) {
-  //   this.isToastOpen = isOpen;
-  // }
-
   public loading: boolean = false;
 
   public loginForm = new FormGroup({
@@ -45,9 +39,10 @@ export class LoginPage implements OnInit {
   }
 
   public submitForm() {
-    // console.log("Estoy en la función submitForm");
-    // console.log(this.loginForm.valid);
+
     // console.log(this.loginForm.value);
+    // console.log(this.dataLogin);
+    // console.log(this.loginForm.invalid);
 
     if (this.loginForm.invalid) return;
 

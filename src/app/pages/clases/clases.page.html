@@ -4,7 +4,7 @@
       <ion-back-button text="Atrás" default-href="/menu"></ion-back-button>
     </ion-buttons>
     <ion-title>Clases</ion-title>
-    <ion-progress-bar color="medium" *ngIf="loading" type="indeterminate"></ion-progress-bar>
+    <ion-progress-bar color="primary" *ngIf="loading" type="indeterminate"></ion-progress-bar>
   </ion-toolbar>
 </ion-header>
 
@@ -108,7 +108,7 @@
     fill="clear"
     color="dark"
     size="large">
-      <ion-icon name="person-add"></ion-icon>
+      <ion-icon color="primary" name="person-add"></ion-icon>
     </ion-button>
 
     <ng-template #leaveClase>
@@ -120,7 +120,7 @@
       fill="clear"
       color="dark"
       size="large">
-        <ion-icon name="person-remove"></ion-icon>
+        <ion-icon color="primary" name="person-remove"></ion-icon>
       </ion-button>
     </ng-template>
 
@@ -137,10 +137,10 @@
     </ion-fab-button>
     <ion-fab-list side="top">
       <ion-fab-button (click)="addEntreno()">
-        <ion-icon name="barbell"></ion-icon>
+        <ion-icon color="primary" name="barbell"></ion-icon>
       </ion-fab-button>
       <ion-fab-button (click)="addClase(dateSelected)">
-        <ion-icon name="calendar"></ion-icon>
+        <ion-icon color="primary" name="calendar"></ion-icon>
       </ion-fab-button>
     </ion-fab-list>
   </ion-fab>
