@@ -15,9 +15,7 @@
           "options": {
             "allowedCommonJsDependencies": [
               "date-fns",
-              "date-fns/_lib/cloneObject",
-              "date-fns/_lib/getTimezoneOffsetInMilliseconds",
-              "date-fns/_lib/toInteger"
+              "moment-timezone"
             ],
             "outputPath": "www",
             "index": "src/index.html",
