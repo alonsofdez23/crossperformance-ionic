@@ -40,9 +40,6 @@ export class RegisterPage implements OnInit {
   }
 
   public submitForm() {
-    // console.log("Estoy en la función submitForm");
-    // console.log(this.loginForm.valid);
-    // console.log(this.loginForm.value);
 
     if (this.registerForm.invalid) return;
 
@@ -50,14 +47,14 @@ export class RegisterPage implements OnInit {
     this.apiService.register(this.dataRegister)
       .subscribe({
         next: (res: any) => {
-          this.loading = false;
           console.log(res);
 
           this.apiService.setTokenToHeaders(res.token);
           console.log(this.apiService.httpOptions);
 
           this.router.navigate(['/menu'])
-
+          this.registerForm.reset();
+          this.loading = false;
         },
         error: (err: any) => {
           this.loading = false;

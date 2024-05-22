@@ -58,6 +58,7 @@ export class LoginPage implements OnInit {
           this.utilitiesService.presentToast(`Bienvenid@ ${res.user.name}`)
 
           this.router.navigate(['/menu'])
+          this.loginForm.reset();
           this.loading = false;
         },
         error: (err: any) => {
