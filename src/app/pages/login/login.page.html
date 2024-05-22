@@ -18,11 +18,9 @@
     </div>
 
     <!-- Login -->
-    <ion-card>
 
       <form action="" [formGroup]="loginForm" (ngSubmit)="submitForm()" method="post">
 
-        <ion-card-content>
           <ion-item>
             <ion-input
               formControlName="email"
@@ -47,7 +45,6 @@
               <ion-input-password-toggle slot="end"></ion-input-password-toggle>
             </ion-input>
           </ion-item>
-        </ion-card-content>
 
         <ion-button
         type="submit"
@@ -67,7 +64,6 @@
 
       </form>
 
-    </ion-card>
   </div>
 
   <!-- Toast -->

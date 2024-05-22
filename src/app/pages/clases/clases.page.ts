@@ -9,7 +9,9 @@ import { EntrenoModalPage } from 'src/app/modals/entreno-modal/entreno-modal.pag
 import { AtletaModalPage } from 'src/app/modals/atleta-modal/atleta-modal.page';
 import { AddClasePage } from 'src/app/modals/add-clase/add-clase.page';
 import { formatInTimeZone, utcToZonedTime } from 'date-fns-tz';
+import { tz } from "moment-timezone";
 import { AddEntrenoPage } from 'src/app/modals/add-entreno/add-entreno.page';
+import * as moment from 'moment-timezone';
 
 @Component({
   selector: 'app-clases',
@@ -22,7 +24,7 @@ export class ClasesPage implements OnInit {
   // TimeZone User
   public userTimeZone: string = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-  public dateSelected: string = new Date().toISOString();
+  public dateSelected: string = moment().format();
   // Fecha actual formateada
   public dateformated: string = formatInTimeZone(new Date(), this.userTimeZone, 'yyyy-MM-dd HH:mm:ss');
 
@@ -72,7 +74,7 @@ export class ClasesPage implements OnInit {
       this.indexDateClasesRequest();
 
       event.target.complete();
-    }, 2000);
+    }, 1000);
   }
 
   loginRequest() {
