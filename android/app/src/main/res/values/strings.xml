@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">crossperformance-ionic</string>
+    <string name="title_activity_main">crossperformance-ionic</string>
+    <string name="package_name">alonso.fernandez</string>
+    <string name="custom_url_scheme">alonso.fernandez</string>
+</resources>
