@@ -8,7 +8,6 @@ import { MonitorModalPage } from 'src/app/modals/monitor-modal/monitor-modal.pag
 import { EntrenoModalPage } from 'src/app/modals/entreno-modal/entreno-modal.page';
 import { AtletaModalPage } from 'src/app/modals/atleta-modal/atleta-modal.page';
 import { AddClasePage } from 'src/app/modals/add-clase/add-clase.page';
-import { formatInTimeZone, utcToZonedTime } from 'date-fns-tz';
 import { tz } from "moment-timezone";
 import { AddEntrenoPage } from 'src/app/modals/add-entreno/add-entreno.page';
 import * as moment from 'moment-timezone';
@@ -25,8 +24,6 @@ export class ClasesPage implements OnInit {
   public userTimeZone: string = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
   public dateSelected: string = moment().format();
-  // Fecha actual formateada
-  public dateformated: string = formatInTimeZone(new Date(), this.userTimeZone, 'yyyy-MM-dd HH:mm:ss');
 
   public idUser!: number;
   public roleUser!: string;

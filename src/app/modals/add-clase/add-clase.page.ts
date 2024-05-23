@@ -4,9 +4,7 @@ import { Entreno } from 'src/app/models/entreno';
 import { User } from 'src/app/models/user';
 import { ApiService } from 'src/app/services/api.service';
 
-import { format, formatInTimeZone } from "date-fns-tz";
 import { UtilitiesService } from 'src/app/services/utilities.service';
-import { ClasesPage } from 'src/app/pages/clases/clases.page';
 
 @Component({
   selector: 'app-add-clase',
@@ -39,8 +37,6 @@ export class AddClasePage implements OnInit {
   ngOnInit() {
     this.usersAdminCoachRequest();
     this.indexEntrenoRequest();
-    console.log(this.date);
-    console.log(formatInTimeZone(this.date, this.userTimeZone, 'yyyy-MM-dd HH:mm:ss'));
   }
 
   closeModal() {
