@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Entreno } from 'src/app/models/entreno';
 import { User } from 'src/app/models/user';
@@ -32,6 +32,7 @@ export class AddClasePage implements OnInit {
     private modalCtrl: ModalController,
     private apiService: ApiService,
     private utilitiesService: UtilitiesService,
+    private changeDetectorRef: ChangeDetectorRef,
   ) { }
 
   ngOnInit() {
@@ -54,6 +55,7 @@ export class AddClasePage implements OnInit {
       .subscribe({
         next: (res: any) => {
           this.monitores = res;
+          this.changeDetectorRef.detectChanges();
         },
         error: (err: any) => {
           console.log(err);
@@ -66,6 +68,7 @@ export class AddClasePage implements OnInit {
       .subscribe({
         next: (res: any) => {
           this.entrenos = res;
+          this.changeDetectorRef.detectChanges();
         },
         error: (err: any) => {
           console.log(err);

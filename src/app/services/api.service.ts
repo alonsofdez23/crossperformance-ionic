@@ -50,6 +50,10 @@ export class ApiService {
     return this.http.put<any>(environment.apiUrl + `users/${idUser}`, user, this.httpLogin);
   }
 
+  public updateAvatarUser(avatar: any, idUser: number) {
+    return this.http.patch<any>(environment.apiUrl + `users/avatar/${idUser}`, avatar, this.httpLogin);
+  }
+
   public logout() {
     return this.http.get<any>(environment.apiUrl + 'auth/logout', this.httpLogin);
   }

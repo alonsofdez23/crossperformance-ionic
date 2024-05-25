@@ -38,6 +38,7 @@ export class ClasesPage implements OnInit {
   ngOnInit() {
     this.showAuthUserRequest();
     this.indexDateClasesRequest();
+    console.log(this.apiService.httpLogin);
   }
 
   huecosLibres(vacantes: number): any[] {
@@ -139,30 +140,42 @@ export class ClasesPage implements OnInit {
 
   joinClaseRequest(idClase: number) {
     this.loading = true;
+
     this.apiService.joinClase(idClase)
       .subscribe({
         next: (res: any) => {
-          this.loading = false;
           console.log(res);
         },
         error: (err: any) => {
+          this.loading = false;
           console.log(err);
         }
-      })
+      });
+
+    setTimeout(() => {
+      this.indexDateClasesRequest();
+      this.loading = false;
+    }, 100);
   }
 
   leaveClaseRequest(idClase: number) {
     this.loading = true;
+
     this.apiService.leaveClase(idClase)
       .subscribe({
         next: (res: any) => {
-          this.loading = false;
           console.log(res);
         },
         error: (err: any) => {
+          this.loading = false;
           console.log(err);
         }
       })
+
+    setTimeout(() => {
+      this.indexDateClasesRequest();
+      this.loading = false;
+    }, 100);
   }
 
   // Modals

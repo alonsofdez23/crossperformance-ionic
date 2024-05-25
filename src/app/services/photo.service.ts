@@ -6,6 +6,7 @@ import { Preferences } from '@capacitor/preferences';
 import { Platform } from '@ionic/angular';
 import { ApiService } from './api.service';
 import { User } from '../models/user';
+import { UtilitiesService } from './utilities.service';
 
 export interface UserPhoto {
   filepath: string;
@@ -24,27 +25,47 @@ export class PhotoService {
   constructor(
     platform: Platform,
     private apiService: ApiService,
+    private utilitiesService: UtilitiesService,
   ) {
     this.platform = platform
   }
 
-  public async addNewToGallery() {
+  public async addNewToGallery(source: CameraSource, edit: boolean, idUser?: number) {
     // Take a photo
     const capturedPhoto = await Camera.getPhoto({
       resultType: CameraResultType.Base64,
-      source: CameraSource.Photos,
-      allowEditing: false,
+      source: source,
+      allowEditing: edit,
       quality: 100
     });
-    //console.log(capturedPhoto);
 
     if (capturedPhoto && capturedPhoto.base64String) {
 
       this.photoBase64 = `data:image/jpeg;base64,${capturedPhoto.base64String}`;
+      console.log(this.photoBase64);
+
+      if (idUser) {
+        this.uploadImage(this.photoBase64, idUser);
+      }
     }
   }
 
+  uploadImage(base64Image: string, idUser: number) {
+    const avatar = {
+      'profile_photo_url': base64Image,
+    }
 
+    this.apiService.updateAvatarUser(avatar, idUser).subscribe({
+      next: (res: any) => {
+        console.log(res);
+        this.utilitiesService.presentToast('Avatar actualizado correctamente');
+      },
+      error: (err: any) => {
+        console.log(err);
+        this.utilitiesService.presentToast('Debes rellenar todos los campos');
+      }
+    });
+  }
 
   // Save picture to file on device
   private async savePicture(photo: Photo) {

@@ -51,6 +51,14 @@ const routes: Routes = [
     path: 'pagos',
     loadChildren: () => import('./pages/pagos/pagos.module').then( m => m.PagosPageModule)
   },
+  {
+    path: 'admin',
+    loadChildren: () => import('./pages/admin/admin.module').then( m => m.AdminPageModule)
+  },
+  {
+    path: 'admin-user',
+    loadChildren: () => import('./pages/admin-user/admin-user.module').then( m => m.AdminUserPageModule)
+  },
 ];
 
 @NgModule({

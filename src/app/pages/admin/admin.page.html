@@ -1,0 +1,124 @@
+<ion-header class="ion-no-border" [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="Atrás" default-href="/menu"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Usuarios</ion-title>
+    <ion-progress-bar color="primary" *ngIf="loading" type="indeterminate"></ion-progress-bar>
+  </ion-toolbar>
+  <!-- <ion-toolbar>
+    <ion-searchbar [debounce]="1000"></ion-searchbar>
+  </ion-toolbar> -->
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Usuarios</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- Usuarios -->
+  <ion-list>
+
+    <!-- Admin -->
+    <ion-item-divider *ngIf="usersAdmin" sticky>Admin</ion-item-divider>
+
+    <ion-item-sliding *ngFor="let admin of usersAdmin;
+    let isLast = last">
+      <ion-item [lines]="!isLast ? '' : 'none'" [button]="true" (click)="presentModalUser(admin)">
+        <ion-avatar aria-hidden="true" slot="start">
+          <img [alt]="admin.name" [src]="admin.profile_photo_url" />
+        </ion-avatar>
+        <ion-label>{{ admin.name }}</ion-label>
+      </ion-item>
+      <ion-item-options slot="end">
+        <ion-item-option color="tertiary">
+          <ion-icon slot="icon-only" name="share"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="danger" expandable="true">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <!-- Coach -->
+    <ion-item-divider *ngIf="usersCoach" sticky>Coach</ion-item-divider>
+
+    <ion-item-sliding *ngFor="let coach of usersCoach;
+      let isLast = last">
+      <ion-item [lines]="!isLast ? '' : 'none'" [button]="true" (click)="presentModalUser(coach)">
+        <ion-avatar aria-hidden="true" slot="start">
+          <img [alt]="coach.name" [src]="coach.profile_photo_url" />
+        </ion-avatar>
+        <ion-label>{{ coach.name }}</ion-label>
+      </ion-item>
+      <ion-item-options slot="end">
+        <ion-item-option color="tertiary">
+          <ion-icon slot="icon-only" name="share"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="danger" expandable="true">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <!-- Atleta -->
+    <ion-item-divider *ngIf="usersAtleta" sticky>Atleta</ion-item-divider>
+
+    <ion-item-sliding *ngFor="let atleta of usersAtleta;
+      let isLast = last">
+      <ion-item [lines]="!isLast ? '' : 'none'" [button]="true" (click)="presentModalUser(atleta)">
+        <ion-avatar aria-hidden="true" slot="start">
+          <img [alt]="atleta.name" [src]="atleta.profile_photo_url" />
+        </ion-avatar>
+        <ion-label>{{ atleta.name }}</ion-label>
+      </ion-item>
+      <ion-item-options slot="end">
+        <ion-item-option color="tertiary">
+          <ion-icon slot="icon-only" name="share"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="danger" expandable="true">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <!-- Sin rol -->
+    <ion-item-divider *ngIf="usersNoRole" sticky>Sin rol</ion-item-divider>
+
+    <ion-item-sliding *ngFor="let user of usersNoRole;
+      let isLast = last">
+      <ion-item [lines]="!isLast ? '' : 'none'" [button]="true" (click)="presentModalUser(user)">
+        <ion-avatar aria-hidden="true" slot="start">
+          <img [alt]="user.name" [src]="user.profile_photo_url" />
+        </ion-avatar>
+        <ion-label>{{ user.name }}</ion-label>
+      </ion-item>
+      <ion-item-options slot="end">
+        <ion-item-option color="tertiary">
+          <ion-icon slot="icon-only" name="share"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="danger" expandable="true">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+  </ion-list>
+
+  <!-- Fab button (admin/coach) -->
+  <ion-fab
+    slot="fixed"
+    vertical="bottom"
+    horizontal="end">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

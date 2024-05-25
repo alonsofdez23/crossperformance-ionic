@@ -34,6 +34,10 @@
             <ion-icon color="primary" name="stats-chart"></ion-icon>
             Becnhmark
           </ion-col>
+          <ion-col *ngIf="roleUser === 'admin'" size="12" size-md="6" routerLink="/admin">
+            <ion-icon color="primary" name="finger-print"></ion-icon>
+            Admin
+          </ion-col>
         </ion-row>
       </ion-grid>
     </ion-card-content>

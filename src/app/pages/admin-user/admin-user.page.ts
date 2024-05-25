@@ -1,70 +1,63 @@
-import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { CameraSource } from '@capacitor/camera';
+import { ActionSheetController, ModalController } from '@ionic/angular';
 import { User } from 'src/app/models/user';
 import { ApiService } from 'src/app/services/api.service';
-import { Directory, Filesystem } from '@capacitor/filesystem';
-import { ActionSheetController, Platform, ToastController } from '@ionic/angular';
 import { PhotoService } from 'src/app/services/photo.service';
-import { UtilitiesService } from '../../services/utilities.service';
-
-const IMAGE_DIR = 'stored-images';
-
-interface LocalFile {
-	name: string;
-	path: string;
-	data: string;
-}
+import { UtilitiesService } from 'src/app/services/utilities.service';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.page.html',
-  styleUrls: ['./profile.page.scss'],
+  selector: 'app-admin-user',
+  templateUrl: './admin-user.page.html',
+  styleUrls: ['./admin-user.page.scss'],
 })
-export class ProfilePage implements OnInit {
-
-  public user: any;
-
-  public userRequest!: User;
+export class AdminUserPage implements OnInit {
 
   public loading: boolean = false;
+
+  @Input() id!: number;
+  @Input() name!: string;
+  @Input() photo!: string;
+  @Input() email!: string;
+  @Input() role!: string;
+
+  @Input() roleUser!: string;
+
+  public user: any;
 
   public profileForm!: FormGroup;
 
   public isActionSheetOpen = false;
 
   constructor(
-    private apiService: ApiService,
+    private modalCtrl: ModalController,
     private formBuilder: FormBuilder,
-    private platform: Platform,
-    public photoService: PhotoService,
+    private apiService: ApiService,
     private utilitiesService: UtilitiesService,
+    public photoService: PhotoService,
     private actionSheetCtrl: ActionSheetController,
   ) { }
-
-  get dataRegister(): User {
-    const register = this.profileForm.value as User;
-
-    return register;
-  }
 
   ngOnInit() {
     this.profileForm = this.formBuilder.group({
       name: [''],
       email: [''],
       password: [''],
+      role: [''],
     })
 
     this.loading = true;
-    this.apiService.showAuthUser()
+    this.apiService.showUser(this.id)
     .subscribe({
       next: (res: any) => {
-        this.user = res;
+        console.log(res);
+        this.user = res[0];
 
         this.profileForm.patchValue({
           name: this.user.name,
           email: this.user.email,
+          role: this.user.role,
         })
 
         this.loading = false;
@@ -73,36 +66,33 @@ export class ProfilePage implements OnInit {
         console.log(err);
       }
     })
-
-    this.photoService.loadSaved();
-  }
-
-  ionViewWillEnter() {
-    // Set void
-    this.photoService.photoBase64 = '';
-    this.showAuthUserRequest();
   }
 
   public submitForm() {
-    // console.log("Estoy en la función submitForm");
-    // console.log(this.loginForm.valid);
-    // console.log(this.loginForm.value);
 
-    if (this.profileForm.invalid) return;
+  }
 
-    const user = this.profileForm.value
-    user.profile_photo_url = this.photoService.photoBase64;
+  cancel() {
+    return this.modalCtrl.dismiss(null, 'cancel');
+  }
+
+  confirm() {
+    const user = this.profileForm.value;
+
+    console.log(user);
 
     this.loading = true;
     this.apiService.updateUser(user, this.user.id)
       .subscribe({
         next: (res: any) => {
           console.log(res);
-          this.showAuthUserRequest();
           this.utilitiesService.presentToast('Usuario actualizado');
           this.loading = false;
+
+          return this.modalCtrl.dismiss(this.name, 'confirm');
         },
         error: (err: any) => {
+          console.log(err);
           // if (err.error.errors.password[0] === 'validation.required') {
           //   this.utilitiesService.presentToast('Debes introducir contraseña');
           // }
@@ -113,18 +103,7 @@ export class ProfilePage implements OnInit {
       })
   }
 
-  showAuthUserRequest() {
-    this.apiService.showAuthUser()
-      .subscribe({
-        next: (res: any) => {
-          this.user = res;
-        },
-        error: (err: any) => {
-          console.log(err);
-        }
-      })
-  }
-
+  // Subir avatar
   setOpen(isOpen: boolean) {
     this.isActionSheetOpen = isOpen;
   }

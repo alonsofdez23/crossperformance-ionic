@@ -22,12 +22,14 @@
     </ion-popover>
   </ion-item> -->
 
-  <ion-datetime
+  <div class="datetime">
+    <ion-datetime
     displayFormat="DD/MM/YYYY"
     locale="es-ES"
     [(ngModel)]="date"
     [firstDayOfWeek]="1"
-  ></ion-datetime>
+    ></ion-datetime>
+  </div>
 
   <!-- Monitor -->
   <ion-item>
@@ -48,7 +50,7 @@
   </ion-item>
 
   <!-- Vacantes -->
-  <ion-item>
+  <ion-item lines="none">
     <ion-input [(ngModel)]="plazasSelected" label="Plazas" type="number"></ion-input>
   </ion-item>
 

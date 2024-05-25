@@ -1,7 +1,7 @@
 <ion-header class="ion-no-border" [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="Atrás" default-href="/menu"></ion-back-button>
+      <ion-back-button text="Atrás" routerLink="/menu"></ion-back-button>
     </ion-buttons>
     <ion-title>Clases</ion-title>
     <ion-progress-bar color="primary" *ngIf="loading" type="indeterminate"></ion-progress-bar>
@@ -103,8 +103,8 @@
     <ion-button
     type="button"
     *ngIf="!isAtletaJoin(clase.atletas, idUser) && clase.vacantes !>= 0; else leaveClase"
-    (click)="joinClaseRequest(clase.id); indexDateClasesRequest()"
-    [disabled]="compareDate(clase.fecha_hora)"
+    (click)="joinClaseRequest(clase.id)"
+    [disabled]="compareDate(clase.fecha_hora) && roleUser !== 'admin' && roleUser !== 'coach'"
     fill="clear"
     color="dark"
     size="large">
@@ -115,8 +115,8 @@
       <ion-button
       type="button"
       *ngIf="isAtletaJoin(clase.atletas, idUser)"
-      (click)="leaveClaseRequest(clase.id); indexDateClasesRequest()"
-      [disabled]="compareDate(clase.fecha_hora)"
+      (click)="leaveClaseRequest(clase.id)"
+      [disabled]="compareDate(clase.fecha_hora) && roleUser !== 'admin' && roleUser !== 'coach'"
       fill="clear"
       color="dark"
       size="large">
@@ -127,7 +127,6 @@
   </ion-card>
 
   <!-- Fab button (admin/coach) -->
-  <!-- TODO -->
   <ion-fab *ngIf="roleUser === 'admin' || roleUser === 'coach'"
     slot="fixed"
     vertical="bottom"
