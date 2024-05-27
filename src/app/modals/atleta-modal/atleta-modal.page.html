@@ -13,4 +13,8 @@
     </ion-card-header>
   </ion-card>
 
+  <ion-button *ngIf="roleUser === 'admin' || roleUser === 'coach'" expand="block" color="danger" (click)="leaveAtletaClaseRequest(idAtleta, idClase)">
+    Eliminar de la clase
+  </ion-button>
+
 </ion-content>

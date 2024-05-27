@@ -1,0 +1,36 @@
+<ion-header class="ion-no-border" [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()" color="medium">Cancelar</ion-button>
+    </ion-buttons>
+    <ion-title>Asignar entreno</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="addEntrenoClaseRequest()" [strong]="true">Guardar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- Entreno -->
+  <ion-item>
+    <ion-select [(ngModel)]="entrenoSelected" (ionChange)="showEntreno()" label="Entreno">
+      <ion-select-option
+        *ngFor="let entreno of entrenos"
+        [value]="entreno.id">{{ entreno.denominacion }}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <div class="entreno" *ngIf="entrenoSelected">
+    {{ entrenoEntreno }}
+  </div>
+
+  <div class="entreno-void" *ngIf="!entrenoSelected">
+    <h1>Selecciona un entreno</h1>
+    <h3>Por favor</h3>
+  </div>
+
+  <!-- Button -->
+  <!-- <ion-button (click)="storeClaseRequest()" expand="block">Crear clase</ion-button> -->
+
+</ion-content>

@@ -22,6 +22,13 @@ export class AdminPage implements OnInit {
   public usersAtleta!: User[];
   public usersNoRole!: User[];
 
+  public filteredUsersAdmin!: User[];
+  public filteredUsersCoach!: User[];
+  public filteredUsersAtleta!: User[];
+  public filteredUsersNoRole!: User[];
+
+  public inputValue!: string;
+
   constructor(
     private apiService: ApiService,
     private modalCtrl: ModalController,
@@ -63,6 +70,23 @@ export class AdminPage implements OnInit {
           console.log(err);
         }
       })
+  }
+
+  filterUsers(event: any) {
+    const searchTerm = event.target.value.toLowerCase();
+
+    this.filteredUsersAdmin = this.usersAdmin.filter(user =>
+      user.name!.toLowerCase().includes(searchTerm)
+    );
+    this.filteredUsersCoach = this.usersCoach.filter(user =>
+      user.name!.toLowerCase().includes(searchTerm)
+    );
+    this.filteredUsersAtleta = this.usersAtleta.filter(user =>
+      user.name!.toLowerCase().includes(searchTerm)
+    );
+    this.filteredUsersNoRole = this.usersNoRole.filter(user =>
+      user.name!.toLowerCase().includes(searchTerm)
+    );
   }
 
   // Modals

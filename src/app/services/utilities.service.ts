@@ -11,11 +11,17 @@ export class UtilitiesService {
   ) { }
 
   // Toast
-  async presentToast(text: string) {
+  async presentToast(text: string, iconName?: string) {
 		const toast = await this.toastCtrl.create({
 			message: text,
-			duration: 3000
+			duration: 3000,
+      swipeGesture: 'vertical',
 		});
+
+    if (iconName) {
+      toast.icon = iconName;
+    }
+
 		toast.present();
 	}
 }

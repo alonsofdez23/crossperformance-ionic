@@ -1,12 +1,16 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>{{ denominacionEntreno }}</ion-title>
+    <ion-title>{{ clase.entreno.denominacion }}</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
 
-  <h1>{{ denominacionEntreno }}</h1>
+  <h1>{{ clase.entreno.denominacion }}</h1>
 
-  <p>{{ entrenoEntreno }}</p>
+  <p class="denominacion">{{ clase.entreno.entreno }}</p>
+
+  <ion-button *ngIf="roleUser === 'admin' || roleUser === 'coach'" (click)="deleteEntrenoToClaseRequest()" expand="block" color="danger" >
+    Eliminar entreno
+  </ion-button>
 
 </ion-content>

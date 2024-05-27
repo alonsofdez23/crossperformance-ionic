@@ -40,8 +40,8 @@ export class AddClasePage implements OnInit {
     this.indexEntrenoRequest();
   }
 
-  closeModal() {
-    this.modalCtrl.dismiss();
+  closeModal(data: any = null) {
+    this.modalCtrl.dismiss(data);
   }
 
   formatDate(date: string): string {
@@ -91,7 +91,7 @@ export class AddClasePage implements OnInit {
         next: (res: any) => {
           console.log(res);
 
-          this.closeModal();
+          this.closeModal('success');
           this.utilitiesService.presentToast('Clase creada correctamente');
         },
         error: (err: any) => {

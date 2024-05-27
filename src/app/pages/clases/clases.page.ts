@@ -3,7 +3,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { Atleta, ClasesResponse } from 'src/app/interfaces/clases.interfaces';
 import { User } from 'src/app/models/user';
 import { Clase } from 'src/app/models/clase';
-import { ModalController } from '@ionic/angular';
+import { ActionSheetController, ModalController } from '@ionic/angular';
 import { MonitorModalPage } from 'src/app/modals/monitor-modal/monitor-modal.page';
 import { EntrenoModalPage } from 'src/app/modals/entreno-modal/entreno-modal.page';
 import { AtletaModalPage } from 'src/app/modals/atleta-modal/atleta-modal.page';
@@ -11,6 +11,8 @@ import { AddClasePage } from 'src/app/modals/add-clase/add-clase.page';
 import { tz } from "moment-timezone";
 import { AddEntrenoPage } from 'src/app/modals/add-entreno/add-entreno.page';
 import * as moment from 'moment-timezone';
+import { UtilitiesService } from 'src/app/services/utilities.service';
+import { AddEntrenoToClasePage } from 'src/app/modals/add-entreno-to-clase/add-entreno-to-clase.page';
 
 @Component({
   selector: 'app-clases',
@@ -18,6 +20,7 @@ import * as moment from 'moment-timezone';
   styleUrls: ['./clases.page.scss'],
 })
 export class ClasesPage implements OnInit {
+  public idClaseSelected!: number;
   public clases: any;
 
   // TimeZone User
@@ -28,11 +31,15 @@ export class ClasesPage implements OnInit {
   public idUser!: number;
   public roleUser!: string;
 
+  public isActionSheetOpen = false;
+
   public loading: boolean = false;
 
   constructor(
     private apiService: ApiService,
     private modalCtrl: ModalController,
+    private utilitiesService: UtilitiesService,
+    private actionSheetCtrl: ActionSheetController,
   ) { }
 
   ngOnInit() {
@@ -131,6 +138,7 @@ export class ClasesPage implements OnInit {
         next: (res: any) => {
           this.loading = false;
           this.clases = res;
+          console.log(this.clases);
         },
         error: (err: any) => {
           console.log(err);
@@ -142,6 +150,26 @@ export class ClasesPage implements OnInit {
     this.loading = true;
 
     this.apiService.joinClase(idClase)
+      .subscribe({
+        next: (res: any) => {
+          console.log(res);
+        },
+        error: (err: any) => {
+          this.loading = false;
+          console.log(err);
+        }
+      });
+
+    setTimeout(() => {
+      this.indexDateClasesRequest();
+      this.loading = false;
+    }, 100);
+  }
+
+  joinAtletaClaseRequest(idAtleta: number, idClase: number) {
+    this.loading = true;
+
+    this.apiService.joinAtletaClase(idAtleta, idClase)
       .subscribe({
         next: (res: any) => {
           console.log(res);
@@ -178,6 +206,27 @@ export class ClasesPage implements OnInit {
     }, 100);
   }
 
+  deleteClaseMailRequest(idClase: number) {
+    this.loading = true;
+
+    this.apiService.deleteClaseMail(idClase)
+      .subscribe({
+        next: (res: any) => {
+          this.utilitiesService.presentToast(res.message);
+          setTimeout(() => {
+            this.indexDateClasesRequest();
+            this.loading = false;
+          }, 100);
+          console.log(res);
+        },
+        error: (err: any) => {
+          this.utilitiesService.presentToast(err.error.message, 'alert-circle');
+          this.loading = false;
+          console.log(err);
+        }
+      })
+  }
+
   // Modals
   async presentModalMonitor(clase: Clase) {
     const modal = await this.modalCtrl.create({
@@ -199,20 +248,25 @@ export class ClasesPage implements OnInit {
   async presentModalEntreno(clase: Clase) {
     const modal = await this.modalCtrl.create({
       component: EntrenoModalPage,
-      breakpoints: [0, 0.8, 1],
-      initialBreakpoint: 0.8,
+      breakpoints: [0, 1],
+      initialBreakpoint: 1,
       componentProps: {
-        denominacionEntreno: clase.entreno.denominacion,
-        entrenoEntreno: clase.entreno.entreno,
+        clase: clase,
 
         roleUser: this.roleUser,
       },
     });
 
     await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+
+    if (data === 'success') {
+      this.indexDateClasesRequest();
+    }
   }
 
-  async presentModalAtleta(atleta: User) {
+  async presentModalAtleta(atleta: User, clase: Clase) {
     const modal = await this.modalCtrl.create({
       component: AtletaModalPage,
       breakpoints: [0, 0.8, 1],
@@ -222,11 +276,20 @@ export class ClasesPage implements OnInit {
         photoAtleta: atleta.profile_photo_url,
         emailAtleta: atleta.email,
 
+        idAtleta: atleta.id,
+        idClase: clase.id,
+
         roleUser: this.roleUser,
       },
     });
 
     await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+
+    if (data === 'success') {
+      this.indexDateClasesRequest();
+    }
   }
 
   async addClase(date: any) {
@@ -243,10 +306,11 @@ export class ClasesPage implements OnInit {
 
     await modal.present();
 
-    await modal.onWillDismiss()
-      .then(() => {
-        this.indexDateClasesRequest();
-      });
+    const { data } = await modal.onWillDismiss();
+
+    if (data === 'success') {
+      this.indexDateClasesRequest();
+    }
   }
 
   async addEntreno() {
@@ -261,5 +325,70 @@ export class ClasesPage implements OnInit {
     });
 
     await modal.present();
+  }
+
+  async addEntrenoToClase(clase: Clase) {
+    const modal = await this.modalCtrl.create({
+      component: AddEntrenoToClasePage,
+      breakpoints: [0, 1],
+      initialBreakpoint: 1,
+      componentProps: {
+        clase: clase,
+
+        roleUser: this.roleUser,
+      },
+    });
+
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+
+    if (data === 'success') {
+      this.indexDateClasesRequest();
+    }
+  }
+
+  setOpen(isOpen: boolean) {
+    this.isActionSheetOpen = isOpen;
+  }
+
+  async presentActionSheet(idClase: number) {
+    this.idClaseSelected = idClase;
+
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: '¿Eliminar clase?',
+      buttons: [
+        {
+          text: 'Eliminar',
+          role: 'destructive',
+          data: {
+            action: 'delete',
+          },
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          data: {
+            action: 'cancel',
+          },
+        },
+      ],
+    });
+
+    await actionSheet.present();
+
+    const { data } = await actionSheet.onDidDismiss();
+    this.handleAction(data.action);
+  }
+
+  handleAction(action: string) {
+    switch (action) {
+      case 'delete':
+        this.deleteClaseMailRequest(this.idClaseSelected);
+        break;
+      case 'cancel':
+        // Si se cancela
+        break;
+    }
   }
 }
