@@ -67,6 +67,10 @@ const routes: Routes = [
     path: 'admin-entreno',
     loadChildren: () => import('./pages/admin-entreno/admin-entreno.module').then( m => m.AdminEntrenoPageModule)
   },
+  {
+    path: 'join-atleta-clase-modal',
+    loadChildren: () => import('./modals/join-atleta-clase-modal/join-atleta-clase-modal.module').then( m => m.JoinAtletaClaseModalPageModule)
+  },
 ];
 
 @NgModule({

@@ -21,8 +21,8 @@ export class AddEntrenoPage implements OnInit {
 
   ngOnInit() { }
 
-  closeModal() {
-    this.modalCtrl.dismiss();
+  closeModal(data: any = null) {
+    this.modalCtrl.dismiss(data);
   }
 
   storeEntrenoRequest() {
@@ -38,7 +38,7 @@ export class AddEntrenoPage implements OnInit {
         next: (res: any) => {
           console.log(res);
 
-          this.closeModal();
+          this.closeModal('success-admin-entrenos');
           this.utilitiesService.presentToast(`Entreno ${entreno.denominacion} creado correctamente`);
         },
         error: (err: any) => {

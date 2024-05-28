@@ -7,6 +7,7 @@ import { PhotoService } from 'src/app/services/photo.service';
 import { Entreno } from 'src/app/models/entreno';
 import { AdminEntrenoPage } from '../admin-entreno/admin-entreno.page';
 import { UtilitiesService } from 'src/app/services/utilities.service';
+import { AddEntrenoPage } from 'src/app/modals/add-entreno/add-entreno.page';
 
 @Component({
   selector: 'app-admin',
@@ -201,6 +202,26 @@ export class AdminPage implements OnInit {
       .then(() => {
         this.indexEntreno();
       });
+  }
+
+  async addEntreno() {
+    const modal = await this.modalCtrl.create({
+      component: AddEntrenoPage,
+      breakpoints: [0, 1],
+      initialBreakpoint: 1,
+      componentProps: {
+
+        roleUser: this.roleUser,
+      },
+    });
+
+    await modal.present();
+
+    const { data } = await modal.onWillDismiss();
+
+    if (data === 'success-admin-entrenos') {
+      this.indexEntreno();
+    }
   }
 
 }

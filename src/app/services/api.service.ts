@@ -15,8 +15,11 @@ export class ApiService {
 
   public httpLogin: any = {
     headers: new HttpHeaders({
+      // Alonso
       'Authorization': 'Bearer 526|yrOJKbFGLp7VdepiPneKA7EhTK3FPwB4cZN61mIFf85400d2',
-      //'Authorization': 'Bearer 1168|D8O0ttby10vZLuSLjqRmd26BQ0Nj6ETucwMb0Oflb766e908',
+
+      // Selena
+      // 'Authorization': 'Bearer 1168|D8O0ttby10vZLuSLjqRmd26BQ0Nj6ETucwMb0Oflb766e908',
     })
   }
 

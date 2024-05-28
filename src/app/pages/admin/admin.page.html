@@ -291,12 +291,24 @@
     </div>
   </div>
 
-  <!-- Fab button (admin/coach) -->
+  <!-- Fab button Usuarios -->
   <ion-fab
+    *ngIf="selectedSegment === 'usuarios'"
     slot="fixed"
     vertical="bottom"
     horizontal="end">
     <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <!-- Fab button Entrenos -->
+  <ion-fab
+    *ngIf="selectedSegment === 'entrenos'"
+    slot="fixed"
+    vertical="bottom"
+    horizontal="end">
+    <ion-fab-button (click)="addEntreno()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

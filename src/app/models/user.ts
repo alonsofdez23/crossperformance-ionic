@@ -6,3 +6,10 @@ export interface User {
   role?: string,
   profile_photo_url?: string,
 }
+
+export interface Pivot {
+  clase_id:   number;
+  user_id:    number;
+  created_at: Date | null;
+  updated_at: Date | null;
+}

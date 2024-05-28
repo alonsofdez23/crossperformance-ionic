@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ActionSheetController, ModalController } from '@ionic/angular';
 import { Clase } from 'src/app/models/clase';
 import { ApiService } from 'src/app/services/api.service';
 
@@ -18,10 +18,17 @@ export class EntrenoModalPage implements OnInit {
   constructor(
     private modalCtrl: ModalController,
     private apiService: ApiService,
+    private actionSheetCtrl: ActionSheetController,
   ) { }
 
   ngOnInit() {
-    console.log(this.clase.entreno);
+  }
+
+  compareDate(fechaClase: any): boolean {
+    if (new Date(fechaClase) < new Date()) {
+      return true;
+    }
+    return false;
   }
 
   closeModal(data: any = null) {
@@ -41,4 +48,41 @@ export class EntrenoModalPage implements OnInit {
       })
   }
 
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: '¿Eliminar entreno de la clase?',
+      buttons: [
+        {
+          text: 'Eliminar',
+          role: 'destructive',
+          data: {
+            action: 'delete',
+          },
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          data: {
+            action: 'cancel',
+          },
+        },
+      ],
+    });
+
+    await actionSheet.present();
+
+    const { data } = await actionSheet.onDidDismiss();
+    this.handleAction(data.action);
+  }
+
+  handleAction(action: string) {
+    switch (action) {
+      case 'delete':
+        this.deleteEntrenoToClaseRequest();
+        break;
+      case 'cancel':
+        // Si se cancela
+        break;
+    }
+  }
 }

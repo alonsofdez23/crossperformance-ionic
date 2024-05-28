@@ -1,8 +1,19 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>Crear nuevo entreno</ion-title>
+
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="closeModal()">Cancelar</ion-button>
+    </ion-buttons>
+
+    <!-- <ion-title>hola</ion-title> -->
+
+    <ion-buttons slot="end">
+      <ion-button (click)="storeEntrenoRequest()" [strong]="true">Crear entreno</ion-button>
+    </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
+
 <ion-content class="ion-padding">
 
   <!-- Entreno -->
@@ -11,11 +22,11 @@
   </ion-item>
 
   <!-- Entreno -->
-  <ion-item>
-    <ion-textarea [(ngModel)]="entreno" label="Entreno" [counter]="true" maxlength="600"></ion-textarea>
+  <ion-item lines="none">
+    <ion-textarea [(ngModel)]="entreno" label="Entreno" [autoGrow]="true"></ion-textarea>
   </ion-item>
 
   <!-- Button -->
-  <ion-button (click)="storeEntrenoRequest()" expand="block">Crear entreno</ion-button>
+  <!-- <ion-button (click)="storeEntrenoRequest()" expand="block">Crear entreno</ion-button> -->
 
 </ion-content>

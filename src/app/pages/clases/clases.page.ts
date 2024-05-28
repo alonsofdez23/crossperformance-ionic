@@ -13,6 +13,7 @@ import { AddEntrenoPage } from 'src/app/modals/add-entreno/add-entreno.page';
 import * as moment from 'moment-timezone';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 import { AddEntrenoToClasePage } from 'src/app/modals/add-entreno-to-clase/add-entreno-to-clase.page';
+import { JoinAtletaClaseModalPage } from 'src/app/modals/join-atleta-clase-modal/join-atleta-clase-modal.page';
 
 @Component({
   selector: 'app-clases',
@@ -137,8 +138,16 @@ export class ClasesPage implements OnInit {
       .subscribe({
         next: (res: any) => {
           this.loading = false;
+
           this.clases = res;
-          console.log(this.clases);
+
+          // Ordenar lista por fecha (created_at pivot clase_user)
+          this.clases.forEach((clase: { atletas: any[]; }) => {
+            clase.atletas.sort((a: any, b: any) => {
+              return new Date(a.pivot.created_at).getTime() - new Date(b.pivot.created_at).getTime();
+            });
+          });
+          console.log(res);
         },
         error: (err: any) => {
           console.log(err);
@@ -196,6 +205,26 @@ export class ClasesPage implements OnInit {
     }, 100);
   }
 
+  joinAdminRequest(clase: Clase) {
+    this.loading = true;
+
+    this.apiService.joinAtletaClase(1, clase.id!).subscribe({
+      next: (res: any) => {
+        console.log(res);
+
+
+        setTimeout(() => {
+          this.indexDateClasesRequest();
+          this.loading = false;
+        }, 100);
+      },
+      error: (err: any) => {
+        console.log(err);
+        this.loading = false;
+      }
+    });
+  }
+
   leaveClaseRequest(idClase: number) {
     this.loading = true;
 
@@ -238,6 +267,29 @@ export class ClasesPage implements OnInit {
   }
 
   // Modals
+  async presentModalJoinAtleta(clase: Clase) {
+    if (this.roleUser === 'admin' || this.roleUser === 'coach') {
+      const modal = await this.modalCtrl.create({
+        component: JoinAtletaClaseModalPage,
+        breakpoints: [0, 0.8, 1],
+        initialBreakpoint: 0.8,
+        componentProps: {
+          clase: clase,
+
+          roleUser: this.roleUser,
+        },
+      });
+
+      await modal.present();
+
+      const { data } = await modal.onWillDismiss();
+
+      if (data === 'success') {
+        this.indexDateClasesRequest();
+      }
+    }
+  }
+
   async presentModalMonitor(clase: Clase) {
     const modal = await this.modalCtrl.create({
       component: MonitorModalPage,
@@ -288,6 +340,7 @@ export class ClasesPage implements OnInit {
 
         idAtleta: atleta.id,
         idClase: clase.id,
+        dateClase: clase.fecha_hora,
 
         roleUser: this.roleUser,
       },

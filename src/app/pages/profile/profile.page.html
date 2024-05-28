@@ -4,6 +4,9 @@
       <ion-back-button text="Atrás" default-href="/menu"></ion-back-button>
     </ion-buttons>
     <ion-title>{{ user?.name ?? 'Perfil' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="submitForm()" [strong]="true">Actualizar</ion-button>
+    </ion-buttons>
     <ion-progress-bar color="primary" *ngIf="loading" type="indeterminate"></ion-progress-bar>
   </ion-toolbar>
 </ion-header>
@@ -32,7 +35,7 @@
 
     <!-- Login -->
 
-    <form action="" [formGroup]="profileForm" (ngSubmit)="submitForm()" method="post">
+    <form action="" [formGroup]="profileForm" method="post">
 
       <ion-item>
         <ion-input
@@ -66,13 +69,13 @@
         </ion-input>
       </ion-item>
 
-      <ion-button
+      <!-- <ion-button
       type="submit"
       fill="clear"
       color="dark"
       size="large">
         <ion-icon color="primary" name="log-in"></ion-icon>
-      </ion-button>
+      </ion-button> -->
 
     </form>
 

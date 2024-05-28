@@ -1,6 +1,16 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
-    <ion-title>Añadir nueva clase</ion-title>
+
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="closeModal()">Cancelar</ion-button>
+    </ion-buttons>
+
+    <!-- <ion-title>Añadir nueva clase</ion-title> -->
+
+    <ion-buttons slot="end">
+      <ion-button (click)="storeClaseRequest()" [strong]="true">Crear clase</ion-button>
+    </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
@@ -55,6 +65,6 @@
   </ion-item>
 
   <!-- Button -->
-  <ion-button (click)="storeClaseRequest()" expand="block">Crear clase</ion-button>
+  <!-- <ion-button (click)="storeClaseRequest()" expand="block">Crear clase</ion-button> -->
 
 </ion-content>

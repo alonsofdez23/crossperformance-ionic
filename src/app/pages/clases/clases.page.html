@@ -127,6 +127,7 @@
           size="3" size-md="2" size-lg="1"><ion-thumbnail><img [src]="atleta.profile_photo_url" alt="" srcset=""></ion-thumbnail></ion-col>
 
           <ion-col
+          (click)="presentModalJoinAtleta(clase)"
           *ngFor="let item of huecosLibres(clase.vacantes)"
           size="3" size-md="2" size-lg="1"><ion-thumbnail class="vacantes"></ion-thumbnail></ion-col>
         </ion-row>

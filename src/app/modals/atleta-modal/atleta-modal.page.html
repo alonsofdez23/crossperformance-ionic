@@ -1,6 +1,21 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
+
+    <!-- <ion-buttons slot="start">
+      <ion-button color="danger" (click)="leaveAtletaClaseRequest(idAtleta, idClase)">
+        <ion-icon slot="icon-only" name="trash"></ion-icon>
+      </ion-button>
+    </ion-buttons> -->
+
     <ion-title>{{ nameAtleta }}</ion-title>
+
+    <!-- <ion-buttons slot="end" *ngIf="roleUser === 'admin' && !compareDate(dateClase) || roleUser === 'coach' && !compareDate(dateClase)"> -->
+    <ion-buttons slot="end" *ngIf="roleUser === 'admin' || roleUser === 'coach'">
+      <ion-button color="danger" (click)="presentActionSheet(idAtleta, idClase)">
+        <ion-icon slot="icon-only" name="trash"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
@@ -13,8 +28,8 @@
     </ion-card-header>
   </ion-card>
 
-  <ion-button *ngIf="roleUser === 'admin' || roleUser === 'coach'" expand="block" color="danger" (click)="leaveAtletaClaseRequest(idAtleta, idClase)">
+  <!-- <ion-button *ngIf="roleUser === 'admin' || roleUser === 'coach'" expand="block" color="danger" (click)="leaveAtletaClaseRequest(idAtleta, idClase)">
     Eliminar de la clase
-  </ion-button>
+  </ion-button> -->
 
 </ion-content>
