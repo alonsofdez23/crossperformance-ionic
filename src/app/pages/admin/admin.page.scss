@@ -9,7 +9,7 @@
 }
 
 ion-list{
-  // margin-bottom: 120px;
+  margin-bottom: 30px;
 }
 
 .search-void {
@@ -23,4 +23,8 @@ ion-list{
   h3{
     color: var(--ion-color-tertiary-tint);
   }
+}
+
+.selector {
+  padding: 16px;
 }

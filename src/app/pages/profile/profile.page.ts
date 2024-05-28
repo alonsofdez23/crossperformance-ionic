@@ -9,14 +9,6 @@ import { ActionSheetController, Platform, ToastController } from '@ionic/angular
 import { PhotoService } from 'src/app/services/photo.service';
 import { UtilitiesService } from '../../services/utilities.service';
 
-const IMAGE_DIR = 'stored-images';
-
-interface LocalFile {
-	name: string;
-	path: string;
-	data: string;
-}
-
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',

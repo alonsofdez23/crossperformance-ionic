@@ -3,17 +3,30 @@
     <ion-buttons slot="start">
       <ion-back-button text="Atrás" default-href="/menu"></ion-back-button>
     </ion-buttons>
-    <ion-title>Usuarios</ion-title>
+    <ion-title>Admin</ion-title>
     <ion-progress-bar color="primary" *ngIf="loading" type="indeterminate"></ion-progress-bar>
   </ion-toolbar>
-  <ion-toolbar>
+
+  <!-- Searchbar Usuarios-->
+  <ion-toolbar *ngIf="selectedSegment === 'usuarios'">
     <ion-searchbar
       (ionInput)="filterUsers($event)"
-      [(ngModel)]="inputValue"
+      [(ngModel)]="inputValueUsers"
       placeholder="Buscar usuario"
       [debounce]="100">
     </ion-searchbar>
   </ion-toolbar>
+
+  <!-- Searchbar Usuarios-->
+  <ion-toolbar *ngIf="selectedSegment === 'entrenos'">
+    <ion-searchbar
+      (ionInput)="filterEntrenos($event)"
+      [(ngModel)]="inputValueEntrenos"
+      placeholder="Buscar entreno"
+      [debounce]="100">
+    </ion-searchbar>
+  </ion-toolbar>
+
 </ion-header>
 
 <ion-content [fullscreen]="true">
@@ -21,201 +34,261 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-header collapse="condense">
+  <!-- <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Usuarios</ion-title>
     </ion-toolbar>
-  </ion-header>
+  </ion-header> -->
+
+  <div class="selector">
+    <ion-segment value="all" color="primary" [(ngModel)]="selectedSegment" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="usuarios">
+        <ion-label>Usuarios</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="entrenos">
+        <ion-label>Entrenos</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
 
   <!-- Usuarios -->
-  <ion-list>
+  <div class="usuarios" *ngIf="selectedSegment === 'usuarios'">
+    <ion-list>
 
-    <!-- Admin -->
-    <div class="default" *ngIf="!filteredUsersAdmin">
-      <ion-item-divider *ngIf="usersAdmin" sticky>Admin</ion-item-divider>
+      <!-- Admin -->
+      <div class="default" *ngIf="!filteredUsersAdmin">
+        <ion-item-divider *ngIf="usersAdmin" sticky>Admin</ion-item-divider>
 
-      <ion-item-sliding *ngFor="let admin of usersAdmin;
-      let isLast = last">
-        <ion-item [lines]="!isLast ? '' : 'none'" [button]="true" (click)="presentModalUser(admin)">
-          <ion-avatar aria-hidden="true" slot="start">
-            <img [alt]="admin.name" [src]="admin.profile_photo_url" />
-          </ion-avatar>
-          <ion-label>{{ admin.name }}</ion-label>
-        </ion-item>
-        <ion-item-options slot="end">
-          <ion-item-option color="tertiary">
-            <ion-icon slot="icon-only" name="share"></ion-icon>
-          </ion-item-option>
-          <ion-item-option color="danger" expandable="true">
-            <ion-icon slot="icon-only" name="trash"></ion-icon>
-          </ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
-    </div>
-
-    <div class="default" *ngIf="filteredUsersAdmin">
-      <ion-item-divider *ngIf="filteredUsersAdmin.length !== 0" sticky>Admin</ion-item-divider>
-
-      <ion-item-sliding *ngFor="let admin of filteredUsersAdmin;
-      let isLast = last">
-        <ion-item [lines]="!isLast ? '' : 'none'" [button]="true" (click)="presentModalUser(admin)">
-          <ion-avatar aria-hidden="true" slot="start">
-            <img [alt]="admin.name" [src]="admin.profile_photo_url" />
-          </ion-avatar>
-          <ion-label>{{ admin.name }}</ion-label>
-        </ion-item>
-        <ion-item-options slot="end">
-          <ion-item-option color="tertiary">
-            <ion-icon slot="icon-only" name="share"></ion-icon>
-          </ion-item-option>
-          <ion-item-option color="danger" expandable="true">
-            <ion-icon slot="icon-only" name="trash"></ion-icon>
-          </ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
-    </div>
-
-    <!-- Coach -->
-    <div class="default" *ngIf="!filteredUsersCoach">
-      <ion-item-divider *ngIf="usersCoach" sticky>Coach</ion-item-divider>
-
-      <ion-item-sliding *ngFor="let coach of usersCoach;
+        <ion-item-sliding *ngFor="let admin of usersAdmin;
         let isLast = last">
-        <ion-item [lines]="!isLast ? '' : 'none'" [button]="true" (click)="presentModalUser(coach)">
-          <ion-avatar aria-hidden="true" slot="start">
-            <img [alt]="coach.name" [src]="coach.profile_photo_url" />
-          </ion-avatar>
-          <ion-label>{{ coach.name }}</ion-label>
-        </ion-item>
-        <ion-item-options slot="end">
-          <ion-item-option color="tertiary">
-            <ion-icon slot="icon-only" name="share"></ion-icon>
-          </ion-item-option>
-          <ion-item-option color="danger" expandable="true">
-            <ion-icon slot="icon-only" name="trash"></ion-icon>
-          </ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
-    </div>
+          <ion-item [lines]="!isLast ? '' : 'none'" [button]="true" (click)="presentModalUser(admin)">
+            <ion-avatar aria-hidden="true" slot="start">
+              <img [alt]="admin.name" [src]="admin.profile_photo_url" />
+            </ion-avatar>
+            <ion-label>{{ admin.name }}</ion-label>
+          </ion-item>
+          <ion-item-options slot="end">
+            <ion-item-option color="tertiary">
+              <ion-icon slot="icon-only" name="share"></ion-icon>
+            </ion-item-option>
+            <ion-item-option color="danger" expandable="true">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </div>
 
-    <div class="default" *ngIf="filteredUsersCoach">
-      <ion-item-divider *ngIf="filteredUsersCoach.length !== 0" sticky>Coach</ion-item-divider>
+      <div class="default" *ngIf="filteredUsersAdmin">
+        <ion-item-divider *ngIf="filteredUsersAdmin.length !== 0" sticky>Admin</ion-item-divider>
 
-      <ion-item-sliding *ngFor="let coach of filteredUsersCoach;
+        <ion-item-sliding *ngFor="let admin of filteredUsersAdmin;
         let isLast = last">
-        <ion-item [lines]="!isLast ? '' : 'none'" [button]="true" (click)="presentModalUser(coach)">
-          <ion-avatar aria-hidden="true" slot="start">
-            <img [alt]="coach.name" [src]="coach.profile_photo_url" />
-          </ion-avatar>
-          <ion-label>{{ coach.name }}</ion-label>
-        </ion-item>
-        <ion-item-options slot="end">
-          <ion-item-option color="tertiary">
-            <ion-icon slot="icon-only" name="share"></ion-icon>
-          </ion-item-option>
-          <ion-item-option color="danger" expandable="true">
-            <ion-icon slot="icon-only" name="trash"></ion-icon>
-          </ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
+          <ion-item [lines]="!isLast ? '' : 'none'" [button]="true" (click)="presentModalUser(admin)">
+            <ion-avatar aria-hidden="true" slot="start">
+              <img [alt]="admin.name" [src]="admin.profile_photo_url" />
+            </ion-avatar>
+            <ion-label>{{ admin.name }}</ion-label>
+          </ion-item>
+          <ion-item-options slot="end">
+            <ion-item-option color="tertiary">
+              <ion-icon slot="icon-only" name="share"></ion-icon>
+            </ion-item-option>
+            <ion-item-option color="danger" expandable="true">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </div>
+
+      <!-- Coach -->
+      <div class="default" *ngIf="!filteredUsersCoach">
+        <ion-item-divider *ngIf="usersCoach" sticky>Coach</ion-item-divider>
+
+        <ion-item-sliding *ngFor="let coach of usersCoach;
+          let isLast = last">
+          <ion-item [lines]="!isLast ? '' : 'none'" [button]="true" (click)="presentModalUser(coach)">
+            <ion-avatar aria-hidden="true" slot="start">
+              <img [alt]="coach.name" [src]="coach.profile_photo_url" />
+            </ion-avatar>
+            <ion-label>{{ coach.name }}</ion-label>
+          </ion-item>
+          <ion-item-options slot="end">
+            <ion-item-option color="tertiary">
+              <ion-icon slot="icon-only" name="share"></ion-icon>
+            </ion-item-option>
+            <ion-item-option color="danger" expandable="true">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </div>
+
+      <div class="default" *ngIf="filteredUsersCoach">
+        <ion-item-divider *ngIf="filteredUsersCoach.length !== 0" sticky>Coach</ion-item-divider>
+
+        <ion-item-sliding *ngFor="let coach of filteredUsersCoach;
+          let isLast = last">
+          <ion-item [lines]="!isLast ? '' : 'none'" [button]="true" (click)="presentModalUser(coach)">
+            <ion-avatar aria-hidden="true" slot="start">
+              <img [alt]="coach.name" [src]="coach.profile_photo_url" />
+            </ion-avatar>
+            <ion-label>{{ coach.name }}</ion-label>
+          </ion-item>
+          <ion-item-options slot="end">
+            <ion-item-option color="tertiary">
+              <ion-icon slot="icon-only" name="share"></ion-icon>
+            </ion-item-option>
+            <ion-item-option color="danger" expandable="true">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </div>
+
+      <!-- Atleta -->
+      <div class="default" *ngIf="!filteredUsersAtleta">
+        <ion-item-divider *ngIf="usersAtleta" sticky>Atleta</ion-item-divider>
+
+        <ion-item-sliding *ngFor="let atleta of usersAtleta;
+          let isLast = last">
+          <ion-item [lines]="!isLast ? '' : 'none'" [button]="true" (click)="presentModalUser(atleta)">
+            <ion-avatar aria-hidden="true" slot="start">
+              <img [alt]="atleta.name" [src]="atleta.profile_photo_url" />
+            </ion-avatar>
+            <ion-label>{{ atleta.name }}</ion-label>
+          </ion-item>
+          <ion-item-options slot="end">
+            <ion-item-option color="tertiary">
+              <ion-icon slot="icon-only" name="share"></ion-icon>
+            </ion-item-option>
+            <ion-item-option color="danger" expandable="true">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </div>
+
+      <div class="default" *ngIf="filteredUsersAtleta">
+        <ion-item-divider *ngIf="filteredUsersAtleta.length !== 0" sticky>Atleta</ion-item-divider>
+
+        <ion-item-sliding *ngFor="let atleta of filteredUsersAtleta;
+          let isLast = last">
+          <ion-item [lines]="!isLast ? '' : 'none'" [button]="true" (click)="presentModalUser(atleta)">
+            <ion-avatar aria-hidden="true" slot="start">
+              <img [alt]="atleta.name" [src]="atleta.profile_photo_url" />
+            </ion-avatar>
+            <ion-label>{{ atleta.name }}</ion-label>
+          </ion-item>
+          <ion-item-options slot="end">
+            <ion-item-option color="tertiary">
+              <ion-icon slot="icon-only" name="share"></ion-icon>
+            </ion-item-option>
+            <ion-item-option color="danger" expandable="true">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </div>
+
+      <!-- Sin rol -->
+      <div class="default" *ngIf="!filteredUsersNoRole">
+        <ion-item-divider *ngIf="usersNoRole" sticky>Sin rol</ion-item-divider>
+
+        <ion-item-sliding *ngFor="let user of usersNoRole;
+          let isLast = last">
+          <ion-item [lines]="!isLast ? '' : 'none'" [button]="true" (click)="presentModalUser(user)">
+            <ion-avatar aria-hidden="true" slot="start">
+              <img [alt]="user.name" [src]="user.profile_photo_url" />
+            </ion-avatar>
+            <ion-label>{{ user.name }}</ion-label>
+          </ion-item>
+          <ion-item-options slot="end">
+            <ion-item-option color="tertiary">
+              <ion-icon slot="icon-only" name="share"></ion-icon>
+            </ion-item-option>
+            <ion-item-option color="danger" expandable="true">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </div>
+
+      <div class="default" *ngIf="filteredUsersNoRole">
+        <ion-item-divider *ngIf="filteredUsersNoRole.length !== 0" sticky>Sin rol</ion-item-divider>
+
+        <ion-item-sliding *ngFor="let user of filteredUsersNoRole;
+          let isLast = last">
+          <ion-item [lines]="!isLast ? '' : 'none'" [button]="true" (click)="presentModalUser(user)">
+            <ion-avatar aria-hidden="true" slot="start">
+              <img [alt]="user.name" [src]="user.profile_photo_url" />
+            </ion-avatar>
+            <ion-label>{{ user.name }}</ion-label>
+          </ion-item>
+          <ion-item-options slot="end">
+            <ion-item-option color="tertiary">
+              <ion-icon slot="icon-only" name="share"></ion-icon>
+            </ion-item-option>
+            <ion-item-option color="danger" expandable="true">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </div>
+
+    </ion-list>
+
+    <!-- Búsqueda vacía -->
+    <div *ngIf="filteredUsersAdmin?.length === 0 && filteredUsersCoach?.length === 0 && filteredUsersAtleta?.length === 0 && filteredUsersNoRole?.length === 0" class="search-void">
+      <h1>No existe usuarios con '{{ inputValueUsers }}'.</h1>
+      <h3>Prueba de nuevo</h3>
     </div>
+  </div>
 
-    <!-- Atleta -->
-    <div class="default" *ngIf="!filteredUsersAtleta">
-      <ion-item-divider *ngIf="usersAtleta" sticky>Atleta</ion-item-divider>
+  <!-- Entrenos -->
+  <div class="default" *ngIf="!filteredEntrenos">
+    <div class="entrenos" *ngIf="selectedSegment === 'entrenos'">
+      <ion-list>
 
-      <ion-item-sliding *ngFor="let atleta of usersAtleta;
+        <ion-item-sliding (ionSwipe)="deleteEntreno(entreno.id!)" *ngFor="let entreno of entrenos;
         let isLast = last">
-        <ion-item [lines]="!isLast ? '' : 'none'" [button]="true" (click)="presentModalUser(atleta)">
-          <ion-avatar aria-hidden="true" slot="start">
-            <img [alt]="atleta.name" [src]="atleta.profile_photo_url" />
-          </ion-avatar>
-          <ion-label>{{ atleta.name }}</ion-label>
-        </ion-item>
-        <ion-item-options slot="end">
-          <ion-item-option color="tertiary">
-            <ion-icon slot="icon-only" name="share"></ion-icon>
-          </ion-item-option>
-          <ion-item-option color="danger" expandable="true">
-            <ion-icon slot="icon-only" name="trash"></ion-icon>
-          </ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
+          <ion-item [lines]="!isLast ? '' : 'none'" [button]="true" (click)="presentModalEntreno(entreno)">
+            <ion-label>{{ entreno.denominacion }}</ion-label>
+          </ion-item>
+          <ion-item-options (click)="deleteEntreno(entreno.id!)" slot="end">
+            <ion-item-option color="danger" expandable="true">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+
+      </ion-list>
     </div>
+  </div>
 
-    <div class="default" *ngIf="filteredUsersAtleta">
-      <ion-item-divider *ngIf="filteredUsersAtleta.length !== 0" sticky>Atleta</ion-item-divider>
+  <div class="default" *ngIf="filteredEntrenos">
+    <div class="entrenos" *ngIf="selectedSegment === 'entrenos'">
+      <ion-list>
 
-      <ion-item-sliding *ngFor="let atleta of filteredUsersAtleta;
+        <ion-item-sliding (ionSwipe)="deleteEntreno(entreno.id!)" *ngFor="let entreno of filteredEntrenos;
         let isLast = last">
-        <ion-item [lines]="!isLast ? '' : 'none'" [button]="true" (click)="presentModalUser(atleta)">
-          <ion-avatar aria-hidden="true" slot="start">
-            <img [alt]="atleta.name" [src]="atleta.profile_photo_url" />
-          </ion-avatar>
-          <ion-label>{{ atleta.name }}</ion-label>
-        </ion-item>
-        <ion-item-options slot="end">
-          <ion-item-option color="tertiary">
-            <ion-icon slot="icon-only" name="share"></ion-icon>
-          </ion-item-option>
-          <ion-item-option color="danger" expandable="true">
-            <ion-icon slot="icon-only" name="trash"></ion-icon>
-          </ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
+          <ion-item [lines]="!isLast ? '' : 'none'" [button]="true" (click)="presentModalEntreno(entreno)">
+            <ion-label>{{ entreno.denominacion }}</ion-label>
+          </ion-item>
+          <ion-item-options (click)="deleteEntreno(entreno.id!)" slot="end">
+            <ion-item-option color="danger" expandable="true">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+
+      </ion-list>
+
+      <!-- Búsqueda vacía -->
+      <div *ngIf="filteredEntrenos?.length === 0" class="search-void">
+        <h1>No existe entrenos con '{{ inputValueEntrenos }}'.</h1>
+        <h3>Prueba de nuevo</h3>
+      </div>
     </div>
-
-    <!-- Sin rol -->
-    <div class="default" *ngIf="!filteredUsersNoRole">
-      <ion-item-divider *ngIf="usersNoRole" sticky>Sin rol</ion-item-divider>
-
-      <ion-item-sliding *ngFor="let user of usersNoRole;
-        let isLast = last">
-        <ion-item [lines]="!isLast ? '' : 'none'" [button]="true" (click)="presentModalUser(user)">
-          <ion-avatar aria-hidden="true" slot="start">
-            <img [alt]="user.name" [src]="user.profile_photo_url" />
-          </ion-avatar>
-          <ion-label>{{ user.name }}</ion-label>
-        </ion-item>
-        <ion-item-options slot="end">
-          <ion-item-option color="tertiary">
-            <ion-icon slot="icon-only" name="share"></ion-icon>
-          </ion-item-option>
-          <ion-item-option color="danger" expandable="true">
-            <ion-icon slot="icon-only" name="trash"></ion-icon>
-          </ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
-    </div>
-
-    <div class="default" *ngIf="filteredUsersNoRole">
-      <ion-item-divider *ngIf="filteredUsersNoRole.length !== 0" sticky>Sin rol</ion-item-divider>
-
-      <ion-item-sliding *ngFor="let user of filteredUsersNoRole;
-        let isLast = last">
-        <ion-item [lines]="!isLast ? '' : 'none'" [button]="true" (click)="presentModalUser(user)">
-          <ion-avatar aria-hidden="true" slot="start">
-            <img [alt]="user.name" [src]="user.profile_photo_url" />
-          </ion-avatar>
-          <ion-label>{{ user.name }}</ion-label>
-        </ion-item>
-        <ion-item-options slot="end">
-          <ion-item-option color="tertiary">
-            <ion-icon slot="icon-only" name="share"></ion-icon>
-          </ion-item-option>
-          <ion-item-option color="danger" expandable="true">
-            <ion-icon slot="icon-only" name="trash"></ion-icon>
-          </ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
-    </div>
-
-  </ion-list>
-
-  <!-- Búsqueda vacía -->
-  <div *ngIf="filteredUsersAdmin?.length === 0 && filteredUsersCoach?.length === 0 && filteredUsersAtleta?.length === 0 && filteredUsersNoRole?.length === 0" class="search-void">
-    <h1>No existe usuarios con '{{ inputValue }}'.</h1>
-    <h3>Prueba de nuevo</h3>
   </div>
 
   <!-- Fab button (admin/coach) -->

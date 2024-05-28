@@ -4,8 +4,9 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+  <!-- Nombre App -->
 	<key>CFBundleDisplayName</key>
-  <string>crossperformance-ionic</string>
+  <string>Cross Performance</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

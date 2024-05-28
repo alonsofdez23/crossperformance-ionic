@@ -16,6 +16,8 @@ PODS:
     - Capacitor
   - CapacitorPreferences (6.0.0):
     - Capacitor
+  - CapacitorSplashScreen (6.0.0):
+    - Capacitor
   - CapacitorStatusBar (6.0.0):
     - Capacitor
 
@@ -29,6 +31,7 @@ DEPENDENCIES:
   - "CapacitorKeyboard (from `../../node_modules/@capacitor/keyboard`)"
   - "CapacitorNetwork (from `../../node_modules/@capacitor/network`)"
   - "CapacitorPreferences (from `../../node_modules/@capacitor/preferences`)"
+  - "CapacitorSplashScreen (from `../../node_modules/@capacitor/splash-screen`)"
   - "CapacitorStatusBar (from `../../node_modules/@capacitor/status-bar`)"
 
 EXTERNAL SOURCES:
@@ -50,6 +53,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/network"
   CapacitorPreferences:
     :path: "../../node_modules/@capacitor/preferences"
+  CapacitorSplashScreen:
+    :path: "../../node_modules/@capacitor/splash-screen"
   CapacitorStatusBar:
     :path: "../../node_modules/@capacitor/status-bar"
 
@@ -63,8 +68,9 @@ SPEC CHECKSUMS:
   CapacitorKeyboard: deacbd09d8d1029c3681197fb05d206b721d5f73
   CapacitorNetwork: f15a94c16a33cba7c47a17814cb6bcfe3ea34ded
   CapacitorPreferences: c9b839a80baa72e4ed4bdb117618e1950d3046b5
+  CapacitorSplashScreen: 5431ab8d19c1c6e95777d53bfaa7a36a6c3d94c7
   CapacitorStatusBar: 2e4369f99166125435641b1908d05f561eaba6f6
 
-PODFILE CHECKSUM: 4c7c1a5ffe1684bd6660512b0afe3c62f898f6b2
+PODFILE CHECKSUM: 0485e40be4a45b627ff5069f11d090b392c42c5f
 
 COCOAPODS: 1.15.2

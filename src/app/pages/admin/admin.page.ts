@@ -4,6 +4,9 @@ import { User } from 'src/app/models/user';
 import { ApiService } from 'src/app/services/api.service';
 import { AdminUserPage } from '../admin-user/admin-user.page';
 import { PhotoService } from 'src/app/services/photo.service';
+import { Entreno } from 'src/app/models/entreno';
+import { AdminEntrenoPage } from '../admin-entreno/admin-entreno.page';
+import { UtilitiesService } from 'src/app/services/utilities.service';
 
 @Component({
   selector: 'app-admin',
@@ -14,8 +17,13 @@ export class AdminPage implements OnInit {
 
   public loading: boolean = false;
 
+  selectedSegment: string = 'usuarios';
+
   public users: User[] = [];
+  public entrenos: Entreno[] = [];
   public roleUser!: string;
+
+  public filteredEntrenos!: Entreno[];
 
   public usersAdmin!: User[];
   public usersCoach!: User[];
@@ -27,21 +35,33 @@ export class AdminPage implements OnInit {
   public filteredUsersAtleta!: User[];
   public filteredUsersNoRole!: User[];
 
-  public inputValue!: string;
+  public inputValueUsers!: string;
+  public inputValueEntrenos!: string;
 
   constructor(
     private apiService: ApiService,
     private modalCtrl: ModalController,
     private photoService: PhotoService,
+    private utilitiesService: UtilitiesService,
   ) { }
 
   ngOnInit() {
     this.indexUser();
+    this.indexEntreno();
+  }
+
+  segmentChanged(event: any) {
+    console.log('Segment changed', event.detail.value);
+    // Puedes realizar acciones adicionales aquí si es necesario
   }
 
   handleRefresh(event: any) {
     setTimeout(() => {
-      this.indexUser();
+      if (this.selectedSegment === 'usuarios') {
+        this.indexUser();
+      } else if (this.selectedSegment === 'entrenos') {
+        this.indexEntreno();
+      }
 
       event.target.complete();
     }, 1000);
@@ -55,7 +75,7 @@ export class AdminPage implements OnInit {
           console.log(res);
           this.users = res;
 
-          // Ordenar lista alfabéticamente por nombre
+          // Ordenar lista alfabéticamente por denominación
           this.users.sort((a, b) => a.name!.localeCompare(b.name!));
 
           // Filtrar usuarios por rol
@@ -68,6 +88,44 @@ export class AdminPage implements OnInit {
         },
         error: (err: any) => {
           console.log(err);
+        }
+      })
+  }
+
+  indexEntreno() {
+    this.loading = true;
+    this.apiService.indexEntreno()
+      .subscribe({
+        next: (res: any) => {
+          console.log(res);
+          this.entrenos = res;
+
+          // Ordenar lista alfabéticamente por nombre
+          this.entrenos.sort((a, b) => a.denominacion!.localeCompare(b.denominacion!));
+
+          this.loading = false;
+        },
+        error: (err: any) => {
+          console.log(err);
+        }
+      })
+  }
+
+  deleteEntreno(idEntreno: number) {
+    this.loading = true;
+    this.apiService.deleteEntreno(idEntreno)
+      .subscribe({
+        next: (res: any) => {
+          console.log(res);
+          this.entrenos = res;
+          this.loading = false;
+          this.utilitiesService.presentToast(res.message)
+          this.indexEntreno();
+        },
+        error: (err: any) => {
+          console.log(err);
+          this.utilitiesService.presentToast('Entreno asignado a clase, no se puede borrar', 'alert')
+          this.loading = false;
         }
       })
   }
@@ -86,6 +144,14 @@ export class AdminPage implements OnInit {
     );
     this.filteredUsersNoRole = this.usersNoRole.filter(user =>
       user.name!.toLowerCase().includes(searchTerm)
+    );
+  }
+
+  filterEntrenos(event: any) {
+    const searchTerm = event.target.value.toLowerCase();
+
+    this.filteredEntrenos = this.entrenos.filter(entreno =>
+      entreno.denominacion!.toLowerCase().includes(searchTerm)
     );
   }
 
@@ -114,6 +180,26 @@ export class AdminPage implements OnInit {
     await modal.onWillDismiss()
       .then(() => {
         this.indexUser();
+      });
+  }
+
+  async presentModalEntreno(entreno: Entreno) {
+    const modal = await this.modalCtrl.create({
+      component: AdminEntrenoPage,
+      // breakpoints: [0, 0.8, 1],
+      // initialBreakpoint: 0.8,
+      componentProps: {
+        entreno: entreno,
+
+        roleUser: this.roleUser,
+      },
+    });
+
+    await modal.present();
+
+    await modal.onWillDismiss()
+      .then(() => {
+        this.indexEntreno();
       });
   }
 

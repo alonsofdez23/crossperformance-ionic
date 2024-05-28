@@ -146,6 +146,16 @@ export class ClasesPage implements OnInit {
       })
   }
 
+  backDay() {
+    this.dateSelected = moment(this.dateSelected).subtract(1, 'days').format();
+    this.indexDateClasesRequest();
+  }
+
+  nextDay() {
+    this.dateSelected = moment(this.dateSelected).add(1, 'days').format();
+    this.indexDateClasesRequest();
+  }
+
   joinClaseRequest(idClase: number) {
     this.loading = true;
 

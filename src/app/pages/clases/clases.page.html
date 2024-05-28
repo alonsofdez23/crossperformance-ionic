@@ -19,25 +19,38 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-item>
-    <ion-input value="{{ dateSelected | date: 'dd/MM/yyyy' }}" id="date" [readonly]="true"></ion-input>
-    <ion-popover trigger="date">
+  <div class="header-date">
+    <ion-button (click)="backDay()">
+      <ion-icon name="chevron-back"></ion-icon>
+    </ion-button>
 
-      <ng-template>
-        <div class="datetime">
-          <ion-datetime
-            size="cover"
-            presentation="date"
-            displayFormat="DD/MM/YYYY"
-            locale="es-ES"
-            (ionChange)="indexDateClasesRequest()"
-            [(ngModel)]="dateSelected"
-            [firstDayOfWeek]="1"></ion-datetime>
-        </div>
-      </ng-template>
+    <ion-item lines="none">
+      <ion-chip color="primary" id="date">
+        <ion-label>{{ dateSelected | date: 'dd/MM/yyyy' }}</ion-label>
+      </ion-chip>
+      <!-- <ion-input class="input-date" value="{{ dateSelected | date: 'dd/MM/yyyy' }}" id="date" [readonly]="true"></ion-input> -->
+      <ion-popover trigger="date">
 
-    </ion-popover>
-  </ion-item>
+        <ng-template>
+          <div class="datetime">
+            <ion-datetime
+              size="cover"
+              presentation="date"
+              displayFormat="DD/MM/YYYY"
+              locale="es-ES"
+              (ionChange)="indexDateClasesRequest()"
+              [(ngModel)]="dateSelected"
+              [firstDayOfWeek]="1"></ion-datetime>
+          </div>
+        </ng-template>
+
+      </ion-popover>
+    </ion-item>
+
+    <ion-button (click)="nextDay()">
+      <ion-icon name="chevron-forward"></ion-icon>
+    </ion-button>
+  </div>
 
   <!-- Día sin clases -->
   <div *ngIf="clases?.length === 0" class="rest-day">

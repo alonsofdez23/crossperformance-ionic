@@ -63,3 +63,20 @@ ion-popover {
   justify-content: space-between;
   align-items: center;
 }
+
+.input-date {
+  text-align: center;
+}
+
+.header-date {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 16px;
+  ion-label{
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  --inner-border-width: 0px;
+}

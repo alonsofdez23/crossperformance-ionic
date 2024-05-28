@@ -63,6 +63,10 @@ const routes: Routes = [
     path: 'add-entreno-to-clase',
     loadChildren: () => import('./modals/add-entreno-to-clase/add-entreno-to-clase.module').then( m => m.AddEntrenoToClasePageModule)
   },
+  {
+    path: 'admin-entreno',
+    loadChildren: () => import('./pages/admin-entreno/admin-entreno.module').then( m => m.AdminEntrenoPageModule)
+  },
 ];
 
 @NgModule({
