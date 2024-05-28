@@ -17,14 +17,16 @@
 <ion-content class="ion-padding">
 
   <!-- Entreno -->
-  <ion-item>
+  <ion-item lines="none">
     <ion-input [(ngModel)]="denominacion" label="Título" type="text"></ion-input>
   </ion-item>
 
   <!-- Entreno -->
-  <ion-item lines="none">
+  <!-- <ion-item lines="none">
     <ion-textarea [(ngModel)]="entreno" label="Entreno" [autoGrow]="true"></ion-textarea>
-  </ion-item>
+  </ion-item> -->
+
+  <ckeditor [editor]="Editor" [(ngModel)]="entreno"></ckeditor>
 
   <!-- Button -->
   <!-- <ion-button (click)="storeEntrenoRequest()" expand="block">Crear entreno</ion-button> -->

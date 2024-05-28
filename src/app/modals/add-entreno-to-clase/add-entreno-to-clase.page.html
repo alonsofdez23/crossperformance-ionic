@@ -21,9 +21,7 @@
     </ion-select>
   </ion-item>
 
-  <div class="entreno" *ngIf="entrenoSelected">
-    {{ entrenoEntreno }}
-  </div>
+  <div class="entreno" [innerHTML]="entrenoEntreno" *ngIf="entrenoSelected"></div>
 
   <div class="entreno-void" *ngIf="!entrenoSelected">
     <h1>Selecciona un entreno</h1>

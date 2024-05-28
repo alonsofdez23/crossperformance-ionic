@@ -19,7 +19,7 @@
   <div class="main">
 
     <!-- Entreno -->
-    {{ entreno.entreno }}
+    <div class="denominacion" [innerHTML]="sanitizer.bypassSecurityTrustHtml(entreno.entreno)"></div>
 
   </div>
 

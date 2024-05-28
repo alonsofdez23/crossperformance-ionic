@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { AddEntrenoPageRoutingModule } from './add-entreno-routing.module';
 
 import { AddEntrenoPage } from './add-entreno.page';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    AddEntrenoPageRoutingModule
+    AddEntrenoPageRoutingModule,
+    CKEditorModule
   ],
   declarations: [AddEntrenoPage]
 })

@@ -3,12 +3,18 @@ import { ModalController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { DomSanitizer } from '@angular/platform-browser';
+
 @Component({
   selector: 'app-add-entreno',
   templateUrl: './add-entreno.page.html',
   styleUrls: ['./add-entreno.page.scss'],
 })
 export class AddEntrenoPage implements OnInit {
+
+  title = 'angular';
+  public Editor = ClassicEditor;
 
   public denominacion: string = '';
   public entreno: string = '';
@@ -17,6 +23,7 @@ export class AddEntrenoPage implements OnInit {
     private modalCtrl: ModalController,
     private utilitiesService: UtilitiesService,
     private apiService: ApiService,
+    private sanitizer: DomSanitizer,
   ) { }
 
   ngOnInit() { }

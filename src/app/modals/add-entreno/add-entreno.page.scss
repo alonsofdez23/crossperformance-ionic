@@ -1,3 +1,8 @@
 ion-button {
   margin-top: 20px;
 }
+
+ckeditor {
+  -webkit-user-select: text;
+  user-select: text
+}

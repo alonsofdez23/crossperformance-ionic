@@ -3,6 +3,8 @@ import { ActionSheetController, ModalController } from '@ionic/angular';
 import { Clase } from 'src/app/models/clase';
 import { ApiService } from 'src/app/services/api.service';
 
+import { DomSanitizer } from "@angular/platform-browser";
+
 @Component({
   selector: 'app-entreno-modal',
   templateUrl: './entreno-modal.page.html',
@@ -14,12 +16,16 @@ export class EntrenoModalPage implements OnInit {
 
   @Input() roleUser!: string;
 
+  trustedHtml: any;
+
 
   constructor(
     private modalCtrl: ModalController,
     private apiService: ApiService,
     private actionSheetCtrl: ActionSheetController,
-  ) { }
+    public sanitizer: DomSanitizer,
+  ) {
+  }
 
   ngOnInit() {
   }

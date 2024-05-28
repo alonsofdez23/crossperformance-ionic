@@ -15,7 +15,8 @@
           "options": {
             "allowedCommonJsDependencies": [
               "date-fns",
-              "moment-timezone"
+              "moment-timezone",
+              "@ckeditor/ckeditor5-build-classic"
             ],
             "outputPath": "www",
             "index": "src/index.html",

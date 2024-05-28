@@ -21,7 +21,7 @@
 
   <h1>{{ clase.entreno.denominacion }}</h1>
 
-  <p class="denominacion">{{ clase.entreno.entreno }}</p>
+  <div class="denominacion" [innerHTML]="sanitizer.bypassSecurityTrustHtml(clase.entreno.entreno)"></div>
 
   <!-- <ion-button *ngIf="roleUser === 'admin' || roleUser === 'coach'" (click)="deleteEntrenoToClaseRequest()" expand="block" color="danger" >
     Eliminar entreno

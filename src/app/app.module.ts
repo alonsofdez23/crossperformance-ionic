@@ -10,9 +10,11 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { MaskitoDirective, MaskitoModule } from '@maskito/angular';
 
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, MaskitoDirective, MaskitoModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, MaskitoDirective, MaskitoModule, CKEditorModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })

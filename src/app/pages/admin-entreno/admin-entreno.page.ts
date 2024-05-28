@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ModalController } from '@ionic/angular';
 import { Entreno } from 'src/app/models/entreno';
 import { ApiService } from 'src/app/services/api.service';
@@ -19,6 +20,7 @@ export class AdminEntrenoPage implements OnInit {
   constructor(
     private apiService: ApiService,
     private modalCtrl: ModalController,
+    public sanitizer: DomSanitizer,
   ) { }
 
   ngOnInit() {
