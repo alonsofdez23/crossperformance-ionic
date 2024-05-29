@@ -73,6 +73,14 @@ ion-popover {
   justify-content: space-between;
   align-items: center;
   margin: 0 16px;
+
+  // Sticky select date
+  // position: sticky;
+  // top: 0;
+  // z-index: 1000; /* Ajusta según sea necesario para asegurar que esté por encima de otros elementos */
+  // background-color: white; /* Asegura que el fondo sea visible */
+  // padding: 10px; /* Ajusta el padding según sea necesario */
+
   ion-label{
     font-size: 1.2rem;
     font-weight: bold;
