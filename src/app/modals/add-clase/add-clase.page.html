@@ -32,9 +32,13 @@
     </ion-popover>
   </ion-item> -->
 
+  <!-- minuteValues="0,15,30,45" -->
+  <!-- min="2000-01-01" -->
   <div class="datetime">
     <ion-datetime
     displayFormat="DD/MM/YYYY"
+    minuteValues="0,15,30,45"
+    max="2050-12-31"
     locale="es-ES"
     [(ngModel)]="date"
     [firstDayOfWeek]="1"

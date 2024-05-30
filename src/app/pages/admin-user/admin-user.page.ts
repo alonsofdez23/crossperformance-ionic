@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CameraSource } from '@capacitor/camera';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import { User } from 'src/app/models/user';
@@ -41,9 +41,9 @@ export class AdminUserPage implements OnInit {
 
   ngOnInit() {
     this.profileForm = this.formBuilder.group({
-      name: [''],
-      email: [''],
-      password: [''],
+      name: ['', [Validators.maxLength(30)]],
+      email: ['', [Validators.email]],
+      password: ['', [Validators.minLength(6)]],
       role: [''],
     })
 
@@ -68,25 +68,21 @@ export class AdminUserPage implements OnInit {
     })
   }
 
-  public submitForm() {
-
-  }
-
   cancel() {
     return this.modalCtrl.dismiss(null, 'cancel');
   }
 
   confirm() {
-    const user = this.profileForm.value;
+    if (this.profileForm.invalid) return;
 
-    console.log(user);
+    if (!this.profileForm.get('password')?.value) {
+      const user = this.profileForm.value;
 
-    this.loading = true;
-    this.apiService.updateUser(user, this.user.id)
+      this.apiService.updateUserAdmin(user, this.user.id)
       .subscribe({
         next: (res: any) => {
           console.log(res);
-          this.utilitiesService.presentToast('Usuario actualizado');
+          this.utilitiesService.presentToast('Usuario actualizado correctamente');
           this.loading = false;
 
           return this.modalCtrl.dismiss(this.name, 'confirm');
@@ -96,11 +92,39 @@ export class AdminUserPage implements OnInit {
           // if (err.error.errors.password[0] === 'validation.required') {
           //   this.utilitiesService.presentToast('Debes introducir contraseña');
           // }
-          this.utilitiesService.presentToast('Debes rellenar todos los campos');
+          this.utilitiesService.presentToast('Algo salió mal', 'alert');
 
           this.loading = false;
         }
       })
+    }
+
+    if (this.profileForm.get('password')?.value) {
+      const user = this.profileForm.value;
+
+      console.log(user);
+
+      this.loading = true;
+      this.apiService.updateUser(user, this.user.id)
+        .subscribe({
+          next: (res: any) => {
+            console.log(res);
+            this.utilitiesService.presentToast('Contraseña actualizado correctamente');
+            this.loading = false;
+
+            return this.modalCtrl.dismiss(this.name, 'confirm');
+          },
+          error: (err: any) => {
+            console.log(err);
+            // if (err.error.errors.password[0] === 'validation.required') {
+            //   this.utilitiesService.presentToast('Debes introducir contraseña');
+            // }
+            this.utilitiesService.presentToast('Debes rellenar todos los campos', 'alert');
+
+            this.loading = false;
+          }
+        })
+    }
   }
 
   // Subir avatar

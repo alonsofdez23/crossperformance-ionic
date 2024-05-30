@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { ApiService } from 'src/app/services/api.service';
@@ -14,19 +14,13 @@ export class LoginPage implements OnInit {
 
   public loading: boolean = false;
 
-  public loginForm = new FormGroup({
-    email: new FormControl('',
-      { validators: [Validators.required, Validators.email] }
-    ),
-    password: new FormControl('',
-      { validators: [Validators.required, Validators.minLength(6)] }
-    ),
-  });
+  loginForm!: FormGroup;
 
   constructor(
     private apiService: ApiService,
     private router: Router,
     private utilitiesService: UtilitiesService,
+    private formBuilder: FormBuilder,
   ) { }
 
   get dataLogin(): User {
@@ -36,6 +30,10 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
+    this.loginForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
+    });
   }
 
   public submitForm() {

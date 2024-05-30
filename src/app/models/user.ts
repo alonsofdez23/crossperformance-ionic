@@ -5,6 +5,7 @@ export interface User {
   password?: string,
   role?: string,
   profile_photo_url?: string,
+  suscripcion?: string,
 }
 
 export interface Pivot {

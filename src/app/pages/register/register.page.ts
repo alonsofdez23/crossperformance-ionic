@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { ApiService } from 'src/app/services/api.service';
@@ -13,30 +13,27 @@ export class RegisterPage implements OnInit {
 
   public loading: boolean = false;
 
-  public registerForm = new FormGroup({
-    name: new FormControl('',
-      { validators: [Validators.required, Validators.maxLength(20)] }
-    ),
-    email: new FormControl('',
-      { validators: [Validators.required, Validators.email] }
-    ),
-    password: new FormControl('',
-      { validators: [Validators.required, Validators.minLength(6)] }
-    ),
-  });
+  registerForm!: FormGroup;
 
   constructor(
     private apiService: ApiService,
     private router: Router,
+    private formBuilder: FormBuilder,
   ) { }
 
   get dataRegister(): User {
     const register = this.registerForm.value as User;
+    register.role = 'atleta';
 
     return register;
   }
 
   ngOnInit() {
+    this.registerForm = this.formBuilder.group({
+      name: ['', [Validators.required, Validators.maxLength(30)]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
+    });
   }
 
   public submitForm() {

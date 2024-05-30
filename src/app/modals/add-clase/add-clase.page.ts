@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import * as moment from 'moment';
 import { Entreno } from 'src/app/models/entreno';
 import { User } from 'src/app/models/user';
 import { ApiService } from 'src/app/services/api.service';
@@ -38,6 +39,8 @@ export class AddClasePage implements OnInit {
   ngOnInit() {
     this.usersAdminCoachRequest();
     this.indexEntrenoRequest();
+    // Setear minutos y segundos a 0 en la fecha actual
+    this.date = moment(this.date).minute(0).second(0).format();
   }
 
   closeModal(data: any = null) {
@@ -55,6 +58,10 @@ export class AddClasePage implements OnInit {
       .subscribe({
         next: (res: any) => {
           this.monitores = res;
+
+          // Ordenar por name
+          this.monitores.sort((a, b) => a.name!.localeCompare(b.name!));
+
           this.changeDetectorRef.detectChanges();
         },
         error: (err: any) => {
@@ -68,6 +75,10 @@ export class AddClasePage implements OnInit {
       .subscribe({
         next: (res: any) => {
           this.entrenos = res;
+
+          // Ordenar por denominación
+          this.entrenos.sort((a, b) => a.denominacion!.localeCompare(b.denominacion!));
+
           this.changeDetectorRef.detectChanges();
         },
         error: (err: any) => {

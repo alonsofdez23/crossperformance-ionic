@@ -43,3 +43,15 @@ ion-card-subtitle {
 ion-button {
   margin: 0 15px 15px 15px;
 }
+
+.sub-activa {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 150px;
+
+  h3{
+    color: var(--ion-color-tertiary-tint);
+  }
+}

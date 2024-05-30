@@ -59,8 +59,8 @@ export class ClasesPage implements OnInit {
     return dateFormated;
   }
 
-  compareDate(fechaClase: any): boolean {
-    if (new Date(fechaClase) < new Date()) {
+  compareDate(fecha: any): boolean {
+    if (new Date(fecha) < new Date()) {
       return true;
     }
     return false;

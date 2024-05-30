@@ -5,6 +5,14 @@ import { environment } from 'src/environments/environment';
 import { User } from '../models/user';
 import { Clase, ClaseStore } from '../models/clase';
 import { Entreno } from '../models/entreno';
+import { first } from 'rxjs';
+
+interface PaymentIntentResponse {
+  customerId: string;
+  customerEphemeralKeySecret: string;
+  paymentIntentClientSecret: string;
+  // Otras propiedades que esperes en la respuesta
+}
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +24,7 @@ export class ApiService {
   public httpLogin: any = {
     headers: new HttpHeaders({
       // Alonso
-      'Authorization': 'Bearer 526|yrOJKbFGLp7VdepiPneKA7EhTK3FPwB4cZN61mIFf85400d2',
+      'Authorization': 'Bearer 1249|eWPOBLlbiIp4VhDkc1BkAB5F8OzPuzHssJlSNNSKf29d493a',
 
       // Selena
       // 'Authorization': 'Bearer 1168|D8O0ttby10vZLuSLjqRmd26BQ0Nj6ETucwMb0Oflb766e908',
@@ -54,6 +62,10 @@ export class ApiService {
     return this.http.put<any>(environment.apiUrl + `users/${idUser}`, user, this.httpOptions);
   }
 
+  public updateUserAdmin(user: User, idUser: number) {
+    return this.http.put<any>(environment.apiUrl + `users-admin/${idUser}`, user, this.httpOptions);
+  }
+
   public updateAvatarUser(avatar: any, idUser: number) {
     return this.http.patch<any>(environment.apiUrl + `users/avatar/${idUser}`, avatar, this.httpOptions);
   }
@@ -76,6 +88,30 @@ export class ApiService {
 
   public usersAdminCoach() {
     return this.http.get<any>(environment.apiUrl + 'users/roles/admincoach', this.httpOptions);
+  }
+
+  // Pagos
+  public createCustomer() {
+    return this.http.post<any>(environment.apiUrl + 'create-customer', {}, this.httpOptions).pipe(first());
+  }
+
+  public createPaymentIntent(amount: number, currency: string) {
+    const body = { amount, currency };
+
+    return this.http.post<any>(environment.apiUrl + 'create-payment-intent', body, this.httpOptions).pipe(first());
+  }
+
+  public pagoUnico(amount: number, currency: string) {
+    const body = { amount, currency };
+
+    return this.http.post<PaymentIntentResponse>(environment.apiUrl + 'pago-unico', body, this.httpOptions);
+  }
+
+  // Suscripción custom
+  public customSubscribe(suscripcion: number) {
+    const body = { suscripcion };
+
+    return this.http.post<any>(environment.apiUrl + 'pagos/suscripcion/custom', body, this.httpOptions);
   }
 
   // Atletas

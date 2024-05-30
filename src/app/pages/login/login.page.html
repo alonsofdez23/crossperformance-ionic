@@ -20,9 +20,9 @@
 
     <!-- Login -->
 
-      <form action="" [formGroup]="loginForm" (ngSubmit)="submitForm()" method="post">
+      <form [formGroup]="loginForm" (ngSubmit)="submitForm()" method="post">
 
-          <ion-item>
+          <ion-item lines="none">
             <ion-input
               formControlName="email"
               label="Email"
@@ -32,19 +32,46 @@
               spellcheck="true"
               type="email"
               placeholder="email@gmail.com"
-              ngModel
-              email
+              [errorText]="
+                loginForm.get('email')?.errors?.['required']
+                  ? 'El email es requerido.'
+                  : loginForm.get('email')?.errors?.['email']
+                    ? 'El email no es válido.'
+                    : ''"
             ></ion-input>
           </ion-item>
-          <ion-item>
+          <!-- <div *ngIf="loginForm.get('email')!.touched && loginForm.get('email')!.invalid">
+            <ion-text color="danger" *ngIf="loginForm.get('email')?.errors?.['required']">
+              El email es requerido.
+            </ion-text>
+            <ion-text color="danger" *ngIf="loginForm.get('email')?.errors?.['email']">
+              El email no es válido.
+            </ion-text>
+          </div> -->
+
+          <ion-item lines="none">
             <ion-input
               formControlName="password"
               label="Contraseña"
               type="password"
-              placeholder="contraseña">
-              <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+              placeholder="contraseña"
+              [errorText]="
+                loginForm.get('password')?.errors?.['required']
+                  ? 'El contraseña es requerido.'
+                  : loginForm.get('password')?.errors?.['minlength']
+                    ? 'La contraseña debe tener al menos 6 caracteres.'
+                    : ''"
+              ><ion-input-password-toggle slot="end"></ion-input-password-toggle>
             </ion-input>
           </ion-item>
+          <!-- <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+            <ion-text color="danger" *ngIf="loginForm.get('password')?.errors?.['required']">
+              La contraseña es requerida.
+            </ion-text>
+            <ion-text color="danger" *ngIf="loginForm.get('password')?.errors?.['minlength']">
+              La contraseña debe tener al menos 6 caracteres.
+            </ion-text>
+          </div> -->
 
         <ion-button
         type="submit"

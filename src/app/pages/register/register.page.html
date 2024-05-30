@@ -24,7 +24,7 @@
     <!-- Login -->
     <form action="" [formGroup]="registerForm" (ngSubmit)="submitForm()" method="post">
 
-      <ion-item>
+      <ion-item lines="none">
         <ion-input
           formControlName="name"
           label="Nombre"
@@ -32,11 +32,24 @@
           [clearInput]="true"
           type="text"
           placeholder="nombre"
-          ngModel
-          name
+          [errorText]="
+            registerForm.get('name')?.errors?.['required']
+              ? 'El nombre es requerido.'
+              : registerForm.get('name')?.errors?.['maxlength']
+                ? 'El nombre no puede tener más de 30 caracteres.'
+                : ''"
         ></ion-input>
       </ion-item>
-      <ion-item>
+      <!-- <div *ngIf="registerForm.get('name')!.touched && registerForm.get('name')!.invalid">
+        <ion-text color="danger" *ngIf="registerForm.get('name')?.errors?.['required']">
+          El nombre es requerido.
+        </ion-text>
+        <ion-text color="danger" *ngIf="registerForm.get('name')?.errors?.['maxLength']">
+          El nombre es demasiado largo.
+        </ion-text>
+      </div> -->
+
+      <ion-item lines="none">
         <ion-input
           formControlName="email"
           label="Email"
@@ -44,19 +57,46 @@
           [clearInput]="true"
           type="email"
           placeholder="email@gmail.com"
-          ngModel
-          email
+          [errorText]="
+            registerForm.get('email')?.errors?.['required']
+              ? 'El email es requerido.'
+              : registerForm.get('email')?.errors?.['email']
+                ? 'El email no es válido.'
+                : ''"
         ></ion-input>
       </ion-item>
-      <ion-item>
+      <!-- <div *ngIf="registerForm.get('email')!.touched && registerForm.get('email')!.invalid">
+        <ion-text color="danger" *ngIf="registerForm.get('email')?.errors?.['required']">
+          El email es requerido.
+        </ion-text>
+        <ion-text color="danger" *ngIf="registerForm.get('email')?.errors?.['email']">
+          El email no es válido.
+        </ion-text>
+      </div> -->
+
+      <ion-item lines="none">
         <ion-input
           formControlName="password"
           label="Contraseña"
           type="password"
-          placeholder="contraseña">
-          <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+          placeholder="contraseña"
+          [errorText]="
+            registerForm.get('password')?.errors?.['required']
+              ? 'El contraseña es requerido.'
+              : registerForm.get('password')?.errors?.['minlength']
+                ? 'La contraseña debe tener al menos 6 caracteres.'
+                : ''"
+          ><ion-input-password-toggle slot="end"></ion-input-password-toggle>
         </ion-input>
       </ion-item>
+      <!-- <div *ngIf="registerForm.get('password')!.touched && registerForm.get('password')!.invalid">
+        <ion-text color="danger" *ngIf="registerForm.get('password')?.errors?.['required']">
+          La contraseña es requerida.
+        </ion-text>
+        <ion-text color="danger" *ngIf="registerForm.get('password')?.errors?.['minlength']">
+          La contraseña debe tener al menos 6 caracteres.
+        </ion-text>
+      </div> -->
 
       <ion-button
       type="submit"

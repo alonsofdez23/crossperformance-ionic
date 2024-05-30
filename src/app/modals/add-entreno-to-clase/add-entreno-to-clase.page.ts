@@ -42,6 +42,10 @@ export class AddEntrenoToClasePage implements OnInit {
       .subscribe({
         next: (res: any) => {
           this.entrenos = res;
+
+          // Ordenar por denominación
+          this.entrenos.sort((a, b) => a.denominacion!.localeCompare(b.denominacion!));
+
           console.log(this.entrenos);
         },
         error: (err: any) => {

@@ -29,40 +29,54 @@
 
     <!-- Profile -->
 
-    <form action="" [formGroup]="profileForm" (ngSubmit)="submitForm()" method="post">
+    <form action="" [formGroup]="profileForm" method="post">
 
-      <ion-item>
+      <ion-item lines="none">
         <ion-input
           formControlName="name"
           label="Nombre"
           [clearInput]="true"
           type="text"
           placeholder="nombre"
-          ngModel
-          name
+          [errorText]="
+            profileForm.get('name')?.errors?.['maxLength']
+              ? 'El nombre no puede tener más de 30 caracteres.'
+              : ''"
         ></ion-input>
       </ion-item>
-      <ion-item>
+
+
+      <ion-item lines="none">
         <ion-input
           formControlName="email"
           label="Email"
           [clearInput]="true"
           type="email"
           placeholder="email@gmail.com"
-          ngModel
-          email
+          [errorText]="
+            profileForm.get('email')?.errors?.['email']
+              ? 'El email no es válido.'
+              : ''"
         ></ion-input>
       </ion-item>
-      <ion-item>
+
+
+      <ion-item lines="none">
         <ion-input
           formControlName="password"
           label="Contraseña"
           type="password"
-          placeholder="contraseña">
-          <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+          placeholder="contraseña"
+          [errorText]="
+            profileForm.get('password')?.errors?.['minlength']
+              ? 'La contraseña debe tener al menos 6 caracteres.'
+              : ''"
+          ><ion-input-password-toggle slot="end"></ion-input-password-toggle>
         </ion-input>
       </ion-item>
-      <ion-item>
+
+
+      <ion-item lines="none">
         <ion-select formControlName="role" label="Rol">
           <ion-select-option value="admin">Admin</ion-select-option>
           <ion-select-option value="coach">Coach</ion-select-option>

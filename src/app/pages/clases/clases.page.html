@@ -33,10 +33,13 @@
 
         <ng-template>
           <div class="datetime">
+            <!-- minuteValues="0,15,30,45" -->
+            <!-- min="2000-01-01" -->
             <ion-datetime
               size="cover"
               presentation="date"
               displayFormat="DD/MM/YYYY"
+              max="2050-12-31"
               locale="es-ES"
               (ionChange)="indexDateClasesRequest()"
               [(ngModel)]="dateSelected"
@@ -161,6 +164,7 @@
         </ion-button>
       </ng-template>
 
+      <!-- Eliminar clase -->
       <ion-button
       type="button"
       *ngIf="roleUser === 'admin' || roleUser === 'coach'"
