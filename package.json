@@ -45,6 +45,7 @@
     "@stripe-elements/stripe-elements": "^2.0.2",
     "@stripe/stripe-js": "^3.4.1",
     "animate.css": "^4.1.1",
+    "capacitor-native-biometric": "^4.2.2",
     "date-fns-tz": "^2.0.1",
     "ionicons": "^7.0.0",
     "moment": "^2.30.1",

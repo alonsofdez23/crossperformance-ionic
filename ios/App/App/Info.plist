@@ -64,5 +64,9 @@
 	<string>Para añadir imagenes</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Para guardar imágenes</string>
+
+  <!-- Face ID -->
+  <key>NSFaceIDUsageDescription</key>
+  <string>La aplicación usa Face ID para autenticación rápida y segura.</string>
 </dict>
 </plist>

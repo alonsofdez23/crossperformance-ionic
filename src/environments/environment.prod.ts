@@ -1,8 +1,8 @@
 export const environment = {
   production: true,
 
+  // apiUrl: 'http://10.8.0.3:8000/api/',
   apiUrl: 'https://apilaravel.duckdns.org/api/',
-  //apiUrl: 'https://apilaravel.duckdns.org/api/',
 
   stripe: {
     publishableKey: 'pk_test_51LxluOFEu1F8Aw4ZFU3RtCL17JX0zICqtplmw3ereucD6pSNkh3BNoZIGHolOaBDzV4YG0eBse1jeG6rJbJiiQxN005p5lBK6R',

@@ -81,6 +81,22 @@
           <ion-icon color="primary" name="log-in"></ion-icon>
         </ion-button>
         <ion-button
+        (click)="performBiometricVerification()"
+        type="button"
+        fill="clear"
+        color="dark"
+        size="large">
+          <ion-icon color="primary" name="finger-print"></ion-icon>
+        </ion-button>
+        <!-- <ion-button
+        (click)="deleteCredentials()"
+        type="button"
+        fill="clear"
+        color="dark"
+        size="large">
+          <ion-icon color="primary" name="trash"></ion-icon>
+        </ion-button> -->
+        <ion-button
         type="button"
         fill="clear"
         color="dark"
