@@ -25,7 +25,7 @@
         [errorText]="
         entrenoForm.get('denominacion')?.errors?.['required']
           ? 'El título es requerido.'
-          : entrenoForm.get('denominacion')?.errors?.['maxLength']
+          : entrenoForm.get('denominacion')?.errors?.['maxlength']
             ? 'El título no puede tener más de 15 caracteres.'
             : ''"
       ></ion-input>

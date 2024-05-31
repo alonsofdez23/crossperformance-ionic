@@ -55,6 +55,9 @@ export class AddEntrenoPage implements OnInit {
         },
         error: (err: any) => {
           console.log(err);
+          if (err.error.errors.denominacion) {
+            this.utilitiesService.presentToast(`Ya existe un entreno con el título ${this.entrenoForm.get('denominacion')?.value}`, 'alert');
+          }
         }
       })
   }
