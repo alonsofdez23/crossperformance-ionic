@@ -45,28 +45,45 @@
     ></ion-datetime>
   </div>
 
+  <form [formGroup]="claseForm">
   <!-- Monitor -->
   <ion-item>
-    <ion-select [(ngModel)]="monitorSelected" label="Monitor">
+    <ion-select formControlName="monitor_id" label="Monitor" placeholder="Selecciona un monitor">
+      <div slot="label">Favorite Fruit <ion-text color="danger">(Required)</ion-text></div>
       <ion-select-option
         *ngFor="let monitor of monitores"
         [value]="monitor.id">{{ monitor.name }}</ion-select-option>
     </ion-select>
   </ion-item>
+  <!-- Validación monitor -->
+  <!-- <ion-note color="danger" *ngIf="claseForm.controls['monitor_id'].invalid && claseForm.controls['monitor_id'].touched">
+    La definición de entreno es requerida.
+  </ion-note> -->
 
   <!-- Entreno -->
   <ion-item>
-    <ion-select [(ngModel)]="entrenoSelected" label="Entreno">
+    <ion-select formControlName="entreno_id" label="Entreno">
       <ion-select-option
         *ngFor="let entreno of entrenos"
         [value]="entreno.id">{{ entreno.denominacion }}</ion-select-option>
     </ion-select>
   </ion-item>
 
-  <!-- Vacantes -->
-  <ion-item lines="none">
-    <ion-input [(ngModel)]="plazasSelected" label="Plazas" type="number" inputmode="numeric"></ion-input>
-  </ion-item>
+    <!-- Vacantes -->
+    <ion-item lines="none">
+      <ion-input label="Plazas" type="number" inputmode="numeric"
+        formControlName="vacantes"
+        [errorText]="
+        claseForm.get('plazas')?.errors?.['required']
+          ? 'El número de plazas es requerido.'
+          : claseForm.get('plazas')?.errors?.['min']
+            ? 'Debe tener al menos una plaza.'
+            : claseForm.get('plazas')?.errors?.['max']
+              ? 'No puede tener más de 50 plazas.'
+              : ''"
+      ></ion-input>
+    </ion-item>
+  </form>
 
   <!-- Button -->
   <!-- <ion-button (click)="storeClaseRequest()" expand="block">Crear clase</ion-button> -->

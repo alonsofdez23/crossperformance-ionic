@@ -1,6 +1,8 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import * as moment from 'moment';
+import { Clase } from 'src/app/models/clase';
 import { Entreno } from 'src/app/models/entreno';
 import { User } from 'src/app/models/user';
 import { ApiService } from 'src/app/services/api.service';
@@ -16,6 +18,8 @@ export class AddClasePage implements OnInit {
 
   @Input() date!: string;
   @Input() roleUser!: string;
+
+  claseForm!: FormGroup;
 
   public dateTimeZone!: string;
 
@@ -34,6 +38,7 @@ export class AddClasePage implements OnInit {
     private apiService: ApiService,
     private utilitiesService: UtilitiesService,
     private changeDetectorRef: ChangeDetectorRef,
+    private formBuilder: FormBuilder,
   ) { }
 
   ngOnInit() {
@@ -41,6 +46,25 @@ export class AddClasePage implements OnInit {
     this.indexEntrenoRequest();
     // Setear minutos y segundos a 0 en la fecha actual
     this.date = moment(this.date).minute(0).second(0).format();
+
+    // Formulario clase
+    this.claseForm = this.formBuilder.group({
+      vacantes: [10, [Validators.required, Validators.min(1), Validators.max(50)]],
+      monitor_id: ['', [Validators.required]],
+      entreno_id: [''],
+    });
+  }
+
+  get dataPlazas(): number {
+    const plazasControl = this.claseForm.get('plazas');
+    if (plazasControl) {
+      const plazas = plazasControl.value as number;
+      // Ahora puedes usar 'plazas' como un número
+      return plazas;
+    } else {
+      // Maneja el caso en que 'plazas' sea null
+      return 0;
+    }
   }
 
   closeModal(data: any = null) {
@@ -88,12 +112,10 @@ export class AddClasePage implements OnInit {
   }
 
   storeClaseRequest() {
-    const clase = {
-      monitor_id: this.monitorSelected,
-      entreno_id: this.entrenoSelected,
-      fecha_hora: this.formatDate(this.date),
-      vacantes: this.plazasSelected,
-    }
+    if (this.claseForm.invalid) return;
+
+    const clase = this.claseForm.value;
+    clase.fecha_hora = this.formatDate(this.date);
 
     console.log(clase);
 

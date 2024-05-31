@@ -4,7 +4,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { UtilitiesService } from 'src/app/services/utilities.service';
 
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { DomSanitizer } from '@angular/platform-browser';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-entreno',
@@ -12,6 +12,8 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./add-entreno.page.scss'],
 })
 export class AddEntrenoPage implements OnInit {
+
+  entrenoForm!: FormGroup;
 
   title = 'angular';
   public Editor = ClassicEditor;
@@ -23,30 +25,33 @@ export class AddEntrenoPage implements OnInit {
     private modalCtrl: ModalController,
     private utilitiesService: UtilitiesService,
     private apiService: ApiService,
-    private sanitizer: DomSanitizer,
+    private formBuilder: FormBuilder,
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    // Formulario entreno
+    this.entrenoForm = this.formBuilder.group({
+      denominacion: ['', [Validators.required, Validators.maxLength(15)]],
+      entreno: ['', [Validators.required]],
+    });
+  }
 
   closeModal(data: any = null) {
     this.modalCtrl.dismiss(data);
   }
 
   storeEntrenoRequest() {
-    const entreno = {
-      denominacion: this.denominacion,
-      entreno: this.entreno,
-    }
+    console.log(this.entrenoForm.value);
 
-    console.log(entreno);
+    if (this.entrenoForm.invalid) return;
 
-    this.apiService.storeEntreno(entreno)
+    this.apiService.storeEntreno(this.entrenoForm.value)
       .subscribe({
         next: (res: any) => {
           console.log(res);
 
           this.closeModal('success-admin-entrenos');
-          this.utilitiesService.presentToast(`Entreno ${entreno.denominacion} creado correctamente`);
+          this.utilitiesService.presentToast(`Entreno ${this.entrenoForm.get('denominacion')?.value} creado correctamente`);
         },
         error: (err: any) => {
           console.log(err);

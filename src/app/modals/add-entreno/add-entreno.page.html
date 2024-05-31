@@ -16,17 +16,31 @@
 
 <ion-content class="ion-padding">
 
-  <!-- Entreno -->
-  <ion-item lines="none">
-    <ion-input [(ngModel)]="denominacion" label="Título" type="text"></ion-input>
-  </ion-item>
+  <form [formGroup]="entrenoForm">
+    <!-- Entreno -->
+    <ion-item lines="none">
+      <ion-input label="Título" type="text"
+        formControlName="denominacion"
+        placeholder="título del entreno"
+        [errorText]="
+        entrenoForm.get('denominacion')?.errors?.['required']
+          ? 'El título es requerido.'
+          : entrenoForm.get('denominacion')?.errors?.['maxLength']
+            ? 'El título no puede tener más de 15 caracteres.'
+            : ''"
+      ></ion-input>
+    </ion-item>
 
-  <!-- Entreno -->
-  <!-- <ion-item lines="none">
-    <ion-textarea [(ngModel)]="entreno" label="Entreno" [autoGrow]="true"></ion-textarea>
-  </ion-item> -->
+    <!-- Entreno -->
+    <!-- <ion-item lines="none">
+      <ion-textarea [(ngModel)]="entreno" label="Entreno" [autoGrow]="true"></ion-textarea>
+    </ion-item> -->
 
-  <ckeditor [editor]="Editor" [(ngModel)]="entreno"></ckeditor>
+    <ckeditor formControlName="entreno" [editor]="Editor"></ckeditor>
+    <ion-note color="danger" *ngIf="entrenoForm.controls['entreno'].invalid && entrenoForm.controls['entreno'].touched">
+      La definición de entreno es requerida.
+    </ion-note>
+  </form>
 
   <!-- Button -->
   <!-- <ion-button (click)="storeEntrenoRequest()" expand="block">Crear entreno</ion-button> -->
