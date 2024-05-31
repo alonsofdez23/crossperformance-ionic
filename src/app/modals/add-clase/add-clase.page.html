@@ -74,11 +74,11 @@
       <ion-input label="Plazas" type="number" inputmode="numeric"
         formControlName="vacantes"
         [errorText]="
-        claseForm.get('plazas')?.errors?.['required']
+        claseForm.get('vacantes')?.errors?.['required']
           ? 'El número de plazas es requerido.'
-          : claseForm.get('plazas')?.errors?.['min']
+          : claseForm.get('vacantes')?.errors?.['min']
             ? 'Debe tener al menos una plaza.'
-            : claseForm.get('plazas')?.errors?.['max']
+            : claseForm.get('vacantes')?.errors?.['max']
               ? 'No puede tener más de 50 plazas.'
               : ''"
       ></ion-input>
